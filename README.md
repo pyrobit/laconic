@@ -9,9 +9,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/bruno335548975/laconic/stargazers"><img src="https://img.shields.io/github/stars/bruno335548975/laconic?style=flat&color=yellow" alt="Stars"></a>
-  <a href="https://github.com/bruno335548975/laconic/commits/main"><img src="https://img.shields.io/github/last-commit/bruno335548975/laconic?style=flat" alt="Last Commit"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/bruno335548975/laconic?style=flat" alt="License"></a>
+  <a href="https://github.com/pyrobit/laconic/stargazers"><img src="https://img.shields.io/github/stars/pyrobit/laconic?style=flat&color=yellow" alt="Stars"></a>
+  <a href="https://github.com/pyrobit/laconic/commits/main"><img src="https://img.shields.io/github/last-commit/pyrobit/laconic?style=flat" alt="Last Commit"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/pyrobit/laconic?style=flat" alt="License"></a>
 </p>
 
 <p align="center">
@@ -119,14 +119,14 @@ Pick your agent. One command.
 
 | Agent | Install |
 |-------|---------|
-| **Claude Code** | `claude plugin marketplace add bruno335548975/laconic && claude plugin install laconic@laconic` |
+| **Claude Code** | `claude plugin marketplace add pyrobit/laconic && claude plugin install laconic@laconic` |
 | **Codex** | Clone repo → `/plugins` → Search "Laconic" → Install |
-| **Gemini CLI** | `gemini extensions install https://github.com/bruno335548975/laconic` |
-| **Cursor** | `npx skills add bruno335548975/laconic -a cursor` |
-| **Windsurf** | `npx skills add bruno335548975/laconic -a windsurf` |
-| **Copilot** | `npx skills add bruno335548975/laconic -a github-copilot` |
-| **Cline** | `npx skills add bruno335548975/laconic -a cline` |
-| **Any other** | `npx skills add bruno335548975/laconic` |
+| **Gemini CLI** | `gemini extensions install https://github.com/pyrobit/laconic` |
+| **Cursor** | `npx skills add pyrobit/laconic -a cursor` |
+| **Windsurf** | `npx skills add pyrobit/laconic -a windsurf` |
+| **Copilot** | `npx skills add pyrobit/laconic -a github-copilot` |
+| **Cline** | `npx skills add pyrobit/laconic -a cline` |
+| **Any other** | `npx skills add pyrobit/laconic` |
 
 Install once. Use it every session for that target after that. One rock. That's it.
 
@@ -160,17 +160,17 @@ Auto-activation is built in for Claude Code, Gemini CLI, and the repo-local Code
 Plugin install gives you skills plus auto-loading hooks. If no custom `statusLine` is configured, Laconic prompts badge setup on the first session.
 
 ```bash
-claude plugin marketplace add bruno335548975/laconic
+claude plugin marketplace add pyrobit/laconic
 claude plugin install laconic@laconic
 ```
 
 **Standalone hooks (without plugin):** If you prefer not to use the plugin system:
 ```bash
 # macOS / Linux / WSL
-bash <(curl -s https://raw.githubusercontent.com/bruno335548975/laconic/main/hooks/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/pyrobit/laconic/main/hooks/install.sh)
 
 # Windows (PowerShell)
-irm https://raw.githubusercontent.com/bruno335548975/laconic/main/hooks/install.ps1 | iex
+irm https://raw.githubusercontent.com/pyrobit/laconic/main/hooks/install.ps1 | iex
 ```
 
 Or from a local clone: `bash hooks/install.sh` / `powershell -File hooks\install.ps1`
@@ -210,7 +210,7 @@ codex_hooks = true
 <summary><strong>Gemini CLI — full details</strong></summary>
 
 ```bash
-gemini extensions install https://github.com/bruno335548975/laconic
+gemini extensions install https://github.com/pyrobit/laconic
 ```
 
 Update: `gemini extensions update laconic` · Uninstall: `gemini extensions uninstall laconic`
@@ -230,10 +230,10 @@ Auto-activates via the `GEMINI.md` context file. Also ships custom Gemini comman
 
 | Agent | Command | Not installed | Mode switching | Always-on location |
 |-------|---------|--------------|:--------------:|--------------------|
-| Cursor | `npx skills add bruno335548975/laconic -a cursor` | `.cursor/rules/laconic.mdc` | Y | Cursor rules |
-| Windsurf | `npx skills add bruno335548975/laconic -a windsurf` | `.windsurf/rules/laconic.md` | Y | Windsurf rules |
-| Cline | `npx skills add bruno335548975/laconic -a cline` | `.clinerules/laconic.md` | — | Cline rules or system prompt |
-| Copilot | `npx skills add bruno335548975/laconic -a github-copilot` | `.github/copilot-instructions.md` + `AGENTS.md` | — | Copilot custom instructions |
+| Cursor | `npx skills add pyrobit/laconic -a cursor` | `.cursor/rules/laconic.mdc` | Y | Cursor rules |
+| Windsurf | `npx skills add pyrobit/laconic -a windsurf` | `.windsurf/rules/laconic.md` | Y | Windsurf rules |
+| Cline | `npx skills add pyrobit/laconic -a cline` | `.clinerules/laconic.md` | — | Cline rules or system prompt |
+| Copilot | `npx skills add pyrobit/laconic -a github-copilot` | `.github/copilot-instructions.md` + `AGENTS.md` | — | Copilot custom instructions |
 
 Uninstall: `npx skills remove laconic`
 
@@ -247,18 +247,18 @@ Copilot works with Chat, Edits, and Coding Agent.
 [npx skills](https://github.com/vercel-labs/skills) supports 40+ agents:
 
 ```bash
-npx skills add bruno335548975/laconic           # auto-detect agent
-npx skills add bruno335548975/laconic -a amp
-npx skills add bruno335548975/laconic -a augment
-npx skills add bruno335548975/laconic -a goose
-npx skills add bruno335548975/laconic -a kiro-cli
-npx skills add bruno335548975/laconic -a roo
+npx skills add pyrobit/laconic           # auto-detect agent
+npx skills add pyrobit/laconic -a amp
+npx skills add pyrobit/laconic -a augment
+npx skills add pyrobit/laconic -a goose
+npx skills add pyrobit/laconic -a kiro-cli
+npx skills add pyrobit/laconic -a roo
 # ... and many more
 ```
 
 Uninstall: `npx skills remove laconic`
 
-> **Windows note:** `npx skills` uses symlinks by default. If symlinks fail, add `--copy`: `npx skills add bruno335548975/laconic --copy`
+> **Windows note:** `npx skills` uses symlinks by default. If symlinks fail, add `--copy`: `npx skills add pyrobit/laconic --copy`
 
 **Important:** These agents do not have a hook system, so Laconic will not auto-start. Say `/laconic` or `/laconic balanced` each session.
 
@@ -438,7 +438,7 @@ uv run --with tiktoken python evals/measure.py
 
 If Laconic saves you tokens or money, leave a star.
 
-[![Star History Chart](https://api.star-history.com/svg?repos=bruno335548975/laconic&type=Date)](https://star-history.com/#bruno335548975/laconic&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=pyrobit/laconic&type=Date)](https://star-history.com/#pyrobit/laconic&Date)
 
 ## 🪨 The Caveman Ecosystem
 
@@ -446,7 +446,7 @@ Three tools. One philosophy: **agents do more with less**.
 
 | Repo | What | One-liner |
 |------|------|-----------|
-| [**laconic**](https://github.com/bruno335548975/laconic) *(you are here)* | Output compression skill | Structured brevity with clear reasoning — ~65-80% fewer output tokens across Claude Code, Cursor, Gemini, Codex |
+| [**laconic**](https://github.com/pyrobit/laconic) *(you are here)* | Output compression skill | Structured brevity with clear reasoning — ~65-80% fewer output tokens across Claude Code, Cursor, Gemini, Codex |
 | [**cavemem**](https://github.com/JuliusBrussee/cavemem) | Cross-agent persistent memory | *why agent forget when agent can remember* — compressed SQLite + MCP, local by default |
 | [**cavekit**](https://github.com/JuliusBrussee/cavekit) | Spec-driven autonomous build loop | *why agent guess when agent can know* — natural language → kits → parallel build → verified |
 

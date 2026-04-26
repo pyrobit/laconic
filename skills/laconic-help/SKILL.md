@@ -52,4 +52,4 @@ Resolution: env var > config file > `terse`.
 
 ## More
 
-Full docs: https://github.com/bruno335548975/laconic
+Full docs: https://github.com/pyrobit/laconic

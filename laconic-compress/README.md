@@ -115,7 +115,7 @@ Only the compression call and any targeted repair use model tokens. Detection an
 
 ## Part of Laconic
 
-This skill is part of [laconic](https://github.com/bruno335548975/laconic).
+This skill is part of [laconic](https://github.com/pyrobit/laconic).
 
 - `laconic` makes Claude speak with structured concision.
 - `laconic-compress` makes Claude read less context.

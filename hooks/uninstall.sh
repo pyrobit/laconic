@@ -2,7 +2,7 @@
 # laconic — uninstaller for the SessionStart + UserPromptSubmit hooks
 # Removes: hook files in ~/.claude/hooks, settings.json entries, and the flag file
 # Usage: bash hooks/uninstall.sh
-#   or:  bash <(curl -s https://raw.githubusercontent.com/bruno335548975/laconic/main/hooks/uninstall.sh)
+#   or:  bash <(curl -s https://raw.githubusercontent.com/pyrobit/laconic/main/hooks/uninstall.sh)
 set -e
 
 CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"

@@ -3,7 +3,7 @@
 # Usage: powershell -ExecutionPolicy Bypass -File hooks\install.ps1
 #   or:  powershell -ExecutionPolicy Bypass -File hooks\install.ps1 -Force
 #   or (remote, no -Force support via pipe):
-#        irm https://raw.githubusercontent.com/bruno335548975/laconic/main/hooks/install.ps1 | iex
+#        irm https://raw.githubusercontent.com/pyrobit/laconic/main/hooks/install.ps1 | iex
 #   Note: irm ... | iex cannot pass -Force. For force reinstall, save the file and run with -File.
 param(
     [switch]$Force
@@ -22,7 +22,7 @@ if (-not (Get-Command node -ErrorAction SilentlyContinue)) {
 $ClaudeDir = if ($env:CLAUDE_CONFIG_DIR) { $env:CLAUDE_CONFIG_DIR } else { Join-Path $env:USERPROFILE ".claude" }
 $HooksDir = Join-Path $ClaudeDir "hooks"
 $Settings = Join-Path $ClaudeDir "settings.json"
-$RepoUrl = "https://raw.githubusercontent.com/bruno335548975/laconic/main/hooks"
+$RepoUrl = "https://raw.githubusercontent.com/pyrobit/laconic/main/hooks"
 
 $HookFiles = @("package.json", "laconic-config.js", "laconic-activate.js", "laconic-mode-tracker.js", "laconic-statusline.sh", "laconic-statusline.ps1")
 
