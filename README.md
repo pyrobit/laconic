@@ -5,7 +5,7 @@
 <h1 align="center">laconic ⚡</h1>
 
 <p align="center">
-  <strong>A humble proposal: user-friendly token reduction with intelligible words, building on Caveman's great work.</strong>
+  <strong>User-friendly token reduction with intelligible words. Built on Caveman.</strong>
 </p>
 
 <p align="center">
@@ -30,9 +30,11 @@
 
 ---
 
-A user-friendly way to save tokens with more intelligible words, preserving full rigor and clarity. Laconic uses telegraphic English and symbols for accessibility while cutting **~65-80% of output tokens** and keeping technical accuracy. Features include [terse commits](#laconic-commit), [structured reviews](#laconic-review), and more.
+A user-friendly way to save tokens without losing rigor or clarity. Laconic is a fork and small experiment built on [Caveman](https://github.com/JuliusBrussee/caveman), which already does an excellent job at aggressive token reduction.
 
-Based on the observation that compressed communication reduces LLM token usage without losing substance. Now with a one-line install.
+This repo explores a different tradeoff: less compression, more structure. It may not be updated as often as Caveman. If you want the most efficient token reduction, use Caveman first.
+
+Laconic uses telegraphic English and symbols where helpful, cuts **~65-80% of output tokens**, and keeps technical accuracy. It also includes [terse commits](#laconic-commit), [structured reviews](#laconic-review), and more.
 
 ## Before / After
 
@@ -71,7 +73,7 @@ Based on the observation that compressed communication reduces LLM token usage w
 </tr>
 </table>
 
-**Same fix. 65-80% fewer words. Structured for clarity. Building on Caveman's great work.**
+**Same fix. 65-80% fewer words. Clear structure. Built on Caveman.**
 
 **Pick your Laconic mode:**
 
@@ -94,7 +96,7 @@ Based on the observation that compressed communication reduces LLM token usage w
 </tr>
 </table>
 
-**Same answer. You pick the tradeoff between density and readability.**
+**Same answer. Pick density or readability.**
 
 ```
 ┌─────────────────────────────────────┐
@@ -105,15 +107,15 @@ Based on the observation that compressed communication reduces LLM token usage w
 └─────────────────────────────────────┘
 ```
 
-- **Faster response** — less token to generate = speed go brrr
-- **Easier to read** — no wall of text, just the answer
-- **Same accuracy** — all technical info kept, only fluff removed ([science say so](https://arxiv.org/abs/2604.00025))
-- **Save money** — ~65-80% less output token = less cost
-- **Fun** — every code review become comedy
+- **Faster responses** — fewer output tokens to generate
+- **Easier scanning** — less text, same answer
+- **Same accuracy** — technical content stays; fluff goes ([paper](https://arxiv.org/abs/2604.00025))
+- **Lower cost** — ~65-80% fewer output tokens
+- **More fun** — code review, but shorter
 
 ## Install
 
-Pick your agent. One command. Done.
+Pick your agent. One command.
 
 | Agent | Install |
 |-------|---------|
@@ -126,11 +128,11 @@ Pick your agent. One command. Done.
 | **Cline** | `npx skills add bruno335548975/laconic -a cline` |
 | **Any other** | `npx skills add bruno335548975/laconic` |
 
-Install once. Use in every session for that install target after that. One rock. That it.
+Install once. Use it every session for that target after that. One rock. That's it.
 
 ### What You Get
 
-Auto-activation is built in for Claude Code, Gemini CLI, and the repo-local Codex setup below. `npx skills add` installs the skill for other agents, but does **not** install repo rule/instruction files, so Laconic does not auto-start there unless you add the always-on snippet below.
+Auto-activation is built in for Claude Code, Gemini CLI, and the repo-local Codex setup below. `npx skills add` installs the skill for other agents, but does **not** install repo rule files or instructions, so Laconic does not auto-start there unless you add the always-on snippet below.
 
 | Feature | Claude Code | Codex | Gemini CLI | Cursor | Windsurf | Cline | Copilot |
 |---------|:-----------:|:-----:|:----------:|:------:|:--------:|:-----:|:-------:|
@@ -155,7 +157,7 @@ Auto-activation is built in for Claude Code, Gemini CLI, and the repo-local Code
 <details>
 <summary><strong>Claude Code — full details</strong></summary>
 
-The plugin install gives you skills + auto-loading hooks. If no custom `statusLine` is configured, Laconic nudges Claude to offer badge setup on first session.
+Plugin install gives you skills plus auto-loading hooks. If no custom `statusLine` is configured, Laconic prompts badge setup on the first session.
 
 ```bash
 claude plugin marketplace add bruno335548975/laconic
@@ -175,9 +177,9 @@ Or from a local clone: `bash hooks/install.sh` / `powershell -File hooks\install
 
 Uninstall: `bash hooks/uninstall.sh` or `powershell -File hooks\uninstall.ps1`
 
-**Statusline badge:** Shows `[LACONIC]`, `[LACONIC:BALANCED]`, etc. in your Claude Code status bar.
+**Statusline badge:** Shows `[LACONIC]`, `[LACONIC:BALANCED]`, and related states in the Claude Code status bar.
 
-- **Plugin install:** If you do not already have a custom `statusLine`, Claude should offer to configure it on first session
+- **Plugin install:** If you do not already have a custom `statusLine`, Claude should offer to configure it on the first session
 - **Standalone install:** Configured automatically by `install.sh` / `install.ps1` unless you already have a custom statusline
 - **Custom statusline:** Installer leaves your existing statusline alone. See [`hooks/README.md`](hooks/README.md) for the merge snippet
 
@@ -195,7 +197,7 @@ Uninstall: `bash hooks/uninstall.sh` or `powershell -File hooks\uninstall.ps1`
 2. Clone repo → Open VS Code → Codex Settings → Plugins → find "Laconic" under local marketplace → Install → Reload Window
 3. Codex hooks are currently disabled on Windows, so use `$laconic` to start manually
 
-This repo also ships `.codex/hooks.json` and enables hooks in `.codex/config.toml`, so Laconic auto-activates while you run Codex inside this repo on macOS/Linux. The installed plugin gives you `$laconic`. If you want always-on behavior in other repos too, copy the same `SessionStart` hook there and enable:
+This repo also ships `.codex/hooks.json` and enables hooks in `.codex/config.toml`, so Laconic auto-activates while you run Codex inside this repo on macOS/Linux. The installed plugin gives you `$laconic`. If you want always-on behavior in other repos, copy the same `SessionStart` hook there and enable:
 
 ```toml
 [features]
@@ -213,7 +215,7 @@ gemini extensions install https://github.com/bruno335548975/laconic
 
 Update: `gemini extensions update laconic` · Uninstall: `gemini extensions uninstall laconic`
 
-Auto-activates via `GEMINI.md` context file. Also ships custom Gemini commands:
+Auto-activates via the `GEMINI.md` context file. Also ships custom Gemini commands:
 - `/laconic` — switch to canonical terse mode
 - `/laconic balanced` — switch to balanced mode
 - `/laconic-commit` — generate terse commit message
@@ -224,7 +226,7 @@ Auto-activates via `GEMINI.md` context file. Also ships custom Gemini commands:
 <details>
 <summary><strong>Cursor / Windsurf / Cline / Copilot — full details</strong></summary>
 
-`npx skills add` installs the skill file only — it does **not** install the agent's rule/instruction file, so Laconic does not auto-start. For always-on, add the "Want it always on?" snippet below to your agent's rules or system prompt.
+`npx skills add` installs the skill file only. It does **not** install the agent's rule file or system instructions, so Laconic does not auto-start. For always-on behavior, add the "Want it always on?" snippet below to your agent's rules or system prompt.
 
 | Agent | Command | Not installed | Mode switching | Always-on location |
 |-------|---------|--------------|:--------------:|--------------------|
@@ -258,9 +260,9 @@ Uninstall: `npx skills remove laconic`
 
 > **Windows note:** `npx skills` uses symlinks by default. If symlinks fail, add `--copy`: `npx skills add bruno335548975/laconic --copy`
 
-**Important:** These agents don't have a hook system, so Laconic won't auto-start. Say `/laconic` or `/laconic balanced` to activate each session.
+**Important:** These agents do not have a hook system, so Laconic will not auto-start. Say `/laconic` or `/laconic balanced` each session.
 
-**Want it always on?** Paste this into your agent's system prompt or rules file — Laconic will be active from the first message, every session:
+**Want it always on?** Paste this into your agent's system prompt or rules file. Laconic will be active from the first message of every session:
 
 ```
 Use laconic mode. Preserve exact technical substance.
@@ -291,12 +293,12 @@ Stop with: "stop laconic", "plain english", or "normal mode"
 
 ### Intensity Levels
 
-| Level | Trigger | What it do |
+| Level | Trigger | What it does |
 |-------|---------|------------|
 | **Terse** | `/laconic` or `/laconic terse` | Default Laconic mode. Strong compression with readable structure |
 | **Balanced** | `/laconic balanced` | More connective words for complex topics while staying concise |
 
-Level stick until you change it or session end.
+The level stays active until you change it or the session ends.
 
 ## Laconic Skills
 
@@ -316,7 +318,7 @@ Level stick until you change it or session end.
 
 `/laconic-compress <filepath>` — Laconic makes Claude *speak* with fewer tokens. **Compress** makes Claude *read* fewer tokens.
 
-Your `CLAUDE.md` loads on **every session start**. Laconic Compress rewrites memory files into compact prose so Claude reads less — without you losing the human-readable original.
+Your `CLAUDE.md` loads on **every session start**. Laconic Compress rewrites memory files into compact prose so Claude reads less, while keeping a human-readable backup.
 
 ```
 /laconic-compress CLAUDE.md
@@ -336,11 +338,11 @@ CLAUDE.original.md ← human-readable backup (you read and edit this)
 | `mixed-with-code.md` | 888 | 560 | **36.9%** |
 | **Average** | **898** | **481** | **46%** |
 
-Code blocks, URLs, file paths, commands, headings, dates, version numbers — anything technical passes through untouched. Only prose gets compressed. See the full [laconic-compress README](laconic-compress/README.md) for details. [Security note](./laconic-compress/SECURITY.md): Snyk flags this as High Risk due to subprocess/file patterns — it's a false positive.
+Code blocks, URLs, file paths, commands, headings, dates, and version numbers pass through untouched. Only prose is compressed. See the full [laconic-compress README](laconic-compress/README.md) for details. [Security note](./laconic-compress/SECURITY.md): Snyk flags this as high risk due to subprocess and file patterns; this is a false positive.
 
 ## Benchmarks
 
-Real token counts from the Claude API ([reproduce it yourself](benchmarks/)):
+Real token counts from the Claude API ([reproduce locally](benchmarks/)):
 
 <!-- BENCHMARK-TABLE-START -->
 | Task | Normal (tokens) | Laconic (tokens) | Saved |
@@ -357,34 +359,34 @@ Real token counts from the Claude API ([reproduce it yourself](benchmarks/)):
 | Implement React error boundary | 3454 | 456 | 87% |
 | **Average** | **1214** | **294** | **65%** |
 
-*Range: 22%–87% savings across prompts. Note: While Caveman achieves higher raw token compression (~75%), Laconic adds structured clarity for better usability and correctness verification.*
+*Range: 22%–87% savings across prompts. Caveman achieves higher raw compression (~75%); Laconic trades some of that for structured clarity and easier correctness checks.*
 <!-- BENCHMARK-TABLE-END -->
 
 ## Correctness Comparison
 
-Laconic maintains **100% technical accuracy** across all benchmarks. The fixed structure ensures every claim is logically traceable, with no loss of rigor.
+Laconic maintains **100% technical accuracy** across all benchmarks. The fixed structure keeps each claim logically traceable, with no loss of rigor.
 
-- **Accuracy Verified**: Responses to the 10 benchmark prompts (from `benchmarks/prompts.json`) preserve full correctness while compressing tokens.
-- **Brevity Improves Accuracy**: Research shows constraining models to brief responses improves accuracy by 26% on certain benchmarks and reverses performance hierarchies ([\"Brevity Constraints Reverse Performance Hierarchies in Language Models\"](https://arxiv.org/abs/2604.00025)).
-- **Structured Clarity**: Laconic's **Issue/Cause/Solution/Rationale** format enhances readability and logical flow, making it easier to verify correctness without ambiguity.
+- **Accuracy verified:** Responses to the 10 benchmark prompts in `benchmarks/prompts.json` preserve full correctness while compressing tokens.
+- **Brevity can improve accuracy:** Research shows that constraining models to brief responses improved accuracy by 26 percentage points on some benchmarks and reversed performance hierarchies ([\"Brevity Constraints Reverse Performance Hierarchies in Language Models\"](https://arxiv.org/abs/2604.00025)).
+- **Structured clarity:** Laconic's **Issue/Cause/Solution/Rationale** format improves scanability and makes correctness easier to verify.
 
 > [!IMPORTANT]
-> Laconic only affects output tokens — thinking/reasoning tokens are untouched. Laconic no make brain smaller. Laconic make *mouth* smaller. Biggest win is **structured readability, speed, and clarity**, cost savings are a bonus.
+> Laconic only affects output tokens. Thinking and reasoning tokens stay untouched. Biggest win: **structured readability, speed, and clarity**. Cost savings are a bonus.
 
-A March 2026 paper ["Brevity Constraints Reverse Performance Hierarchies in Language Models"](https://arxiv.org/abs/2604.00025) found that constraining large models to brief responses **improved accuracy by 26 percentage points** on certain benchmarks and completely reversed performance hierarchies. Verbose not always better. Sometimes less word = more correct.
+A March 2026 paper, ["Brevity Constraints Reverse Performance Hierarchies in Language Models"](https://arxiv.org/abs/2604.00025), found that constraining large models to brief responses **improved accuracy by 26 percentage points** on some benchmarks and reversed performance hierarchies. Verbose is not always better. Sometimes less is more correct.
 
 ## Laconic Note
 
 **Foundation**  
-Laconic builds directly on Caveman's proven token-reduction work. Thank you Julius.
+Laconic builds directly on Caveman's proven token-reduction work. Credit to Julius.
 
 **Grok Support**  
 See `laconic-grok.md` — one-click custom instruction version now available.
 
-It adds fixed 4-part structure (**Issue • Cause • Solution • Rationale**) + selective symbols for scanability while keeping every technical claim traceable.
+It adds a fixed 4-part structure (**Issue • Cause • Solution • Rationale**) plus selective symbols for scanability, while keeping every technical claim traceable.
 
-Caveman wins pure token count.  
-Laconic trades ~10-15% tokens for better logical clarity and user accessibility.
+Caveman wins on pure token count.  
+Laconic trades ~10-15% tokens for better logical clarity and accessibility.
 
 Result: 65-80% savings vs normal prose with improved rigor and readability.
 
@@ -416,13 +418,13 @@ pack(φ) ↦ {∀, ∃, ⇒, ⇔, ≠, ∵, ⊢, ∈, ⊆, O(·)}
 | ∧      | And                      |
 | O(·)   | Big-O (complexity)       |
 
-This formal style is provided as an **optional advanced example**. Most users should use the standard terse or balanced modes.
+This formal style is an **optional advanced example**. Most users should stick to terse or balanced mode.
 
 ## Evals
 
-Laconic not just claim 65-80%. Laconic **prove** it.
+Laconic does not just claim 65-80%. Laconic measures it.
 
-The `evals/` directory has a three-arm eval harness that measures real token compression against a proper control — not just "verbose vs skill" but "terse vs skill". Because comparing laconic to verbose Claude conflate the skill with generic terseness. That cheating. Laconic not cheat.
+The `evals/` directory has a three-arm eval harness that measures real token compression against a proper control, not just "verbose vs skill" but "terse vs skill". Comparing Laconic to verbose Claude alone would conflate the skill with generic terseness.
 
 ```bash
 # Run the eval (needs claude CLI)
@@ -434,13 +436,13 @@ uv run --with tiktoken python evals/measure.py
 
 ## Star This Repo
 
-If Laconic saves you tokens and money, leave a star. ⭐
+If Laconic saves you tokens or money, leave a star.
 
 [![Star History Chart](https://api.star-history.com/svg?repos=bruno335548975/laconic&type=Date)](https://star-history.com/#bruno335548975/laconic&Date)
 
 ## 🪨 The Caveman Ecosystem
 
-Three tools. One philosophy: **agent do more with less**.
+Three tools. One philosophy: **agents do more with less**.
 
 | Repo | What | One-liner |
 |------|------|-----------|
@@ -448,7 +450,7 @@ Three tools. One philosophy: **agent do more with less**.
 | [**cavemem**](https://github.com/JuliusBrussee/cavemem) | Cross-agent persistent memory | *why agent forget when agent can remember* — compressed SQLite + MCP, local by default |
 | [**cavekit**](https://github.com/JuliusBrussee/cavekit) | Spec-driven autonomous build loop | *why agent guess when agent can know* — natural language → kits → parallel build → verified |
 
-Install one or combine with other tooling as needed — each stands alone.
+Install one or combine them. Each stands alone.
 
 ## Also by Julius Brussee
 
@@ -456,4 +458,4 @@ Install one or combine with other tooling as needed — each stands alone.
 
 ## License
 
-MIT — free like mass mammoth on open plain.
+MIT. Use it freely.
