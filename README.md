@@ -2,7 +2,7 @@
   <img src="docs/SpartanShield.png" width="120" />
 </p>
 
-<h1 align="center">laconic ⚡</h1>
+<h1 align="center">laconic ⌃</h1>
 
 <p align="center">
   <strong>User-friendly token reduction with intelligible words. Built on Caveman.</strong>
@@ -24,7 +24,7 @@
 </p>
 
 <p align="center">
-  <strong>⚡ Laconic</strong> &nbsp;·&nbsp;
+  <strong>⌃ Laconic</strong> &nbsp;·&nbsp;
   <em>structured brevity for coding agents</em>
 </p>
 
@@ -49,7 +49,7 @@ Laconic uses telegraphic English and symbols where helpful, cuts **~65-80% of ou
 </td>
 <td width="50%">
 
-### ⚡ Laconic Codex (28 tokens)
+### ⌃ Laconic Codex (28 tokens)
 
 > "**Issue:** Inline object prop causes React re-renders. **Cause:** ∀ render: ref({k:v}) ≠ prior ⇒ !shallowEqual ⇒ re-render(C). **Solution:** const p = useMemo(() => ({k: v}), [deps]). **Rationale:** Memoized ref remains stable across renders."
 
@@ -65,7 +65,7 @@ Laconic uses telegraphic English and symbols where helpful, cuts **~65-80% of ou
 </td>
 <td>
 
-### ⚡ Laconic Codex
+### ⌃ Laconic Codex
 
 > "**Issue:** Auth middleware token expiry bug. **Cause:** Check uses `<` instead of `<=`. **Solution:** Change to `<=`. **Rationale:** Ensures expiry is handled correctly."
 
@@ -81,7 +81,7 @@ Laconic uses telegraphic English and symbols where helpful, cuts **~65-80% of ou
 <tr>
 <td width="50%">
 
-#### ⚡ Terse
+#### ⌃ Terse
 
 > "**Issue:** Inline object prop causes React re-renders. **Cause:** ∀ render: ref({k:v}) ≠ prior ⇒ !shallowEqual ⇒ re-render(C). **Solution:** `useMemo(() => ({k: v}), [deps])`. **Rationale:** Stable ref prevents needless renders."
 
