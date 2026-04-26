@@ -408,6 +408,9 @@ A March 2026 paper ["Brevity Constraints Reverse Performance Hierarchies in Lang
 **Foundation**  
 Laconic builds directly on Caveman's proven token-reduction work. Thank you Julius.
 
+**Grok Support**  
+See `laconic-grok.md` — one-click custom instruction version now available.
+
 It adds fixed 4-part structure (**Issue • Cause • Solution • Rationale**) + selective symbols for scanability while keeping every technical claim traceable.
 
 Caveman wins pure token count.  
