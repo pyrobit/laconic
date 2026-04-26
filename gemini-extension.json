@@ -1,6 +1,6 @@
 {
-  "name": "caveman",
-  "description": "Ultra-compressed communication mode. Cuts ~75% of tokens while keeping full technical accuracy by speaking like a caveman.",
+  "name": "laconic",
+  "description": "Structured concise communication mode. Cuts filler while keeping full technical accuracy.",
   "version": "1.0.1",
   "contextFileName": "GEMINI.md"
 }

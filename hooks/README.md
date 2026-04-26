@@ -1,46 +1,47 @@
-# Caveman Hooks
+# Laconic Hooks
 
-These hooks are **bundled with the caveman plugin** and activate automatically when the plugin is installed. No manual setup required.
+These hooks are bundled with the Laconic plugin and activate automatically when the plugin is installed.
 
-If you installed caveman standalone (without the plugin), you can use `bash hooks/install.sh` to wire them into your settings.json manually.
+If you installed Laconic standalone, run `bash hooks/install.sh` or `powershell -ExecutionPolicy Bypass -File hooks\install.ps1` to wire them into `settings.json`.
 
 ## What's Included
 
-### `caveman-activate.js` — SessionStart hook
+### `laconic-activate.js`
 
 - Runs once when Claude Code starts
-- Writes `full` to `~/.claude/.caveman-active` (flag file)
-- Emits caveman rules as hidden SessionStart context
-- Detects missing statusline config and emits setup nudge (Claude will offer to help)
+- Writes the active mode to `~/.claude/.laconic-active`
+- Emits Laconic rules as hidden SessionStart context
+- Detects missing statusline config and emits a setup nudge
 
-### `caveman-mode-tracker.js` — UserPromptSubmit hook
+### `laconic-mode-tracker.js`
 
-- Fires on every user prompt, checks for `/caveman` commands
-- Writes the active mode to the flag file when a caveman command is detected
-- Supports: `full`, `lite`, `ultra`, `wenyan`, `wenyan-lite`, `wenyan-ultra`, `commit`, `review`, `compress`
+- Fires on every user prompt
+- Tracks `/laconic`, `/laconic balanced`, `/laconic-commit`, `/laconic-review`, `/laconic-compress`
+- Removes the flag on `stop laconic`, `plain english`, or `normal mode`
 
-### `caveman-statusline.sh` / `caveman-statusline.ps1` — Statusline badge script
+### `laconic-statusline.sh` / `laconic-statusline.ps1`
 
-- Reads `~/.claude/.caveman-active` and outputs a colored badge
-- Shows `[CAVEMAN]`, `[CAVEMAN:ULTRA]`, `[CAVEMAN:WENYAN]`, etc.
+- Reads `~/.claude/.laconic-active`
+- Shows `[LACONIC]`, `[LACONIC:BALANCED]`, `[LACONIC:COMMIT]`, etc.
 
 ## Statusline Badge
 
-The statusline badge shows which caveman mode is active directly in your Claude Code status bar.
+The badge shows which Laconic mode is active directly in Claude Code.
 
-**Plugin users:** If you do not already have a `statusLine` configured, Claude will detect that on your first session after install and offer to set it up for you. Accept and you're done.
+Examples:
+- `/laconic` -> `[LACONIC]`
+- `/laconic balanced` -> `[LACONIC:BALANCED]`
+- `/laconic-commit` -> `[LACONIC:COMMIT]`
 
-If you already have a custom statusline, caveman does not overwrite it and Claude stays quiet. Add the badge snippet to your existing script instead.
+Plugin installs nudge setup only when no custom `statusLine` exists. Standalone installs wire the badge automatically when possible and leave existing custom statuslines alone.
 
-**Standalone users:** `install.sh` / `install.ps1` wires the statusline automatically if you do not already have a custom statusline. If you do, the installer leaves it alone and prints the merge note.
-
-**Manual setup:** If you need to configure it yourself, add one of these to `~/.claude/settings.json`:
+Manual setup:
 
 ```json
 {
   "statusLine": {
     "type": "command",
-    "command": "bash /path/to/caveman-statusline.sh"
+    "command": "bash /path/to/laconic-statusline.sh"
   }
 }
 ```
@@ -49,59 +50,23 @@ If you already have a custom statusline, caveman does not overwrite it and Claud
 {
   "statusLine": {
     "type": "command",
-    "command": "powershell -ExecutionPolicy Bypass -File C:\\path\\to\\caveman-statusline.ps1"
+    "command": "powershell -ExecutionPolicy Bypass -File C:\\path\\to\\laconic-statusline.ps1"
   }
 }
 ```
-
-Replace the path with the actual script location (e.g. `~/.claude/hooks/` for standalone installs, or the plugin install directory for plugin installs).
-
-**Custom statusline:** If you already have a statusline script, add this snippet to it:
-
-```bash
-caveman_text=""
-caveman_flag="$HOME/.claude/.caveman-active"
-if [ -f "$caveman_flag" ]; then
-  caveman_mode=$(cat "$caveman_flag" 2>/dev/null)
-  if [ "$caveman_mode" = "full" ] || [ -z "$caveman_mode" ]; then
-    caveman_text=$'\033[38;5;172m[CAVEMAN]\033[0m'
-  else
-    caveman_suffix=$(echo "$caveman_mode" | tr '[:lower:]' '[:upper:]')
-    caveman_text=$'\033[38;5;172m[CAVEMAN:'"${caveman_suffix}"$']\033[0m'
-  fi
-fi
-```
-
-Badge examples:
-- `/caveman` → `[CAVEMAN]`
-- `/caveman ultra` → `[CAVEMAN:ULTRA]`
-- `/caveman wenyan` → `[CAVEMAN:WENYAN]`
-- `/caveman-commit` → `[CAVEMAN:COMMIT]`
-- `/caveman-review` → `[CAVEMAN:REVIEW]`
 
 ## How It Works
 
+```text
+SessionStart hook -> writes mode -> ~/.claude/.laconic-active <- writes mode <- UserPromptSubmit hook
+                                          |
+                                       reads
+                                          v
+                                  Statusline script
+                                  [LACONIC:...]
 ```
-SessionStart hook ──writes "full"──▶ ~/.claude/.caveman-active ◀──writes mode── UserPromptSubmit hook
-                                              │
-                                           reads
-                                              ▼
-                                     Statusline script
-                                    [CAVEMAN:ULTRA] │ ...
-```
-
-SessionStart stdout is injected as hidden system context — Claude sees it, users don't. The statusline runs as a separate process. The flag file is the bridge.
 
 ## Uninstall
 
-If installed via plugin: disable the plugin — hooks deactivate automatically.
-
-If installed via `install.sh`:
-```bash
-bash hooks/uninstall.sh
-```
-
-Or manually:
-1. Remove `~/.claude/hooks/caveman-activate.js`, `~/.claude/hooks/caveman-mode-tracker.js`, and the matching statusline script (`caveman-statusline.sh` on macOS/Linux or `caveman-statusline.ps1` on Windows)
-2. Remove the SessionStart, UserPromptSubmit, and statusLine entries from `~/.claude/settings.json`
-3. Delete `~/.claude/.caveman-active`
+- Claude Code plugin: `claude plugin disable laconic`
+- Standalone hooks: `bash hooks/uninstall.sh` or `powershell -ExecutionPolicy Bypass -File hooks\uninstall.ps1`

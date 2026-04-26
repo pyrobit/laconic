@@ -18,23 +18,19 @@
   <a href="#before--after">Before/After</a> •
   <a href="#install">Install</a> •
   <a href="#intensity-levels">Levels</a> •
-  <a href="#caveman-skills">Skills</a> •
+  <a href="#laconic-skills">Skills</a> •
   <a href="#benchmarks">Benchmarks</a> •
   <a href="#evals">Evals</a>
 </p>
 
 <p align="center">
-  <strong>🪨 Caveman Ecosystem</strong> &nbsp;·&nbsp;
-  <strong>caveman</strong> <em>talk less</em> <sub>(you are here)</sub> &nbsp;·&nbsp;
-  <a href="https://github.com/JuliusBrussee/cavemem">cavemem</a> <em>remember more</em> &nbsp;·&nbsp;
-  <a href="https://github.com/JuliusBrussee/cavekit">cavekit</a> <em>build better</em>
+  <strong>⚡ Laconic</strong> &nbsp;·&nbsp;
+  <em>structured brevity for coding agents</em>
 </p>
 
 ---
 
-A humble proposal building on [Caveman's](https://github.com/JuliusBrussee/caveman) great work in token reduction. Laconic provides a user-friendly way to save tokens with more intelligible words, preserving full rigor and clarity. It draws from Caveman's strengths, adding telegraphic English and symbols for better accessibility. Cutting **~65-80% of output tokens** while keeping technical accuracy. Features include [terse commits](#laconic-commit), [structured reviews](#laconic-review), and more.
-
-We appreciate Caveman's innovative approach—thank you for paving the way!
+A user-friendly way to save tokens with more intelligible words, preserving full rigor and clarity. Laconic uses telegraphic English and symbols for accessibility while cutting **~65-80% of output tokens** and keeping technical accuracy. Features include [terse commits](#laconic-commit), [structured reviews](#laconic-review), and more.
 
 Based on the observation that compressed communication reduces LLM token usage without losing substance. Now with a one-line install.
 
@@ -75,44 +71,30 @@ Based on the observation that compressed communication reduces LLM token usage w
 </tr>
 </table>
 
-**Same fix. 65-80% less word. Structured for clarity. Building on Caveman's great work.**
+**Same fix. 65-80% fewer words. Structured for clarity. Building on Caveman's great work.**
 
-**Pick your level of grunt:**
+**Pick your Laconic mode:**
 
 <table>
 <tr>
-<td width="25%">
+<td width="50%">
 
-#### 🪶 Lite
+#### ⚡ Terse
 
-> "Your component re-renders because you create a new object reference each render. Inline object props fail shallow comparison every time. Wrap it in `useMemo`."
-
-</td>
-<td width="25%">
-
-#### 🪨 Full
-
-> "New object ref each render. Inline object prop = new ref = re-render. Wrap in `useMemo`."
+> "**Issue:** Inline object prop causes React re-renders. **Cause:** ∀ render: ref({k:v}) ≠ prior ⇒ !shallowEqual ⇒ re-render(C). **Solution:** `useMemo(() => ({k: v}), [deps])`. **Rationale:** Stable ref prevents needless renders."
 
 </td>
-<td width="25%">
+<td width="50%">
 
-#### 🔥 Ultra
+#### ⚖️ Balanced
 
-> "Inline obj prop → new ref → re-render. `useMemo`."
-
-</td>
-<td width="25%">
-
-#### 📜 文言文
-
-> "物出新參照，致重繪。useMemo Wrap之。"
+> "**Issue:** Inline object prop causes React re-renders. **Cause:** Each render creates a new object reference, so shallow comparison fails. **Solution:** Memoize the object with `useMemo`. **Rationale:** Stable references let React skip unnecessary work." 
 
 </td>
 </tr>
 </table>
 
-**Same answer. You pick how many word.**
+**Same answer. You pick the tradeoff between density and readability.**
 
 ```
 ┌─────────────────────────────────────┐
@@ -136,7 +118,7 @@ Pick your agent. One command. Done.
 | Agent | Install |
 |-------|---------|
 | **Claude Code** | `claude plugin marketplace add bruno335548975/laconic && claude plugin install laconic@laconic` |
-| **Codex** | Clone repo → `/plugins` → Search "Caveman" → Install |
+| **Codex** | Clone repo → `/plugins` → Search "Laconic" → Install |
 | **Gemini CLI** | `gemini extensions install https://github.com/bruno335548975/laconic` |
 | **Cursor** | `npx skills add bruno335548975/laconic -a cursor` |
 | **Windsurf** | `npx skills add bruno335548975/laconic -a windsurf` |
@@ -148,52 +130,52 @@ Install once. Use in every session for that install target after that. One rock.
 
 ### What You Get
 
-Auto-activation is built in for Claude Code, Gemini CLI, and the repo-local Codex setup below. `npx skills add` installs the skill for other agents, but does **not** install repo rule/instruction files, so Caveman does not auto-start there unless you add the always-on snippet below.
+Auto-activation is built in for Claude Code, Gemini CLI, and the repo-local Codex setup below. `npx skills add` installs the skill for other agents, but does **not** install repo rule/instruction files, so Laconic does not auto-start there unless you add the always-on snippet below.
 
 | Feature | Claude Code | Codex | Gemini CLI | Cursor | Windsurf | Cline | Copilot |
 |---------|:-----------:|:-----:|:----------:|:------:|:--------:|:-----:|:-------:|
-| Caveman mode | Y | Y | Y | Y | Y | Y | Y |
+| Laconic mode | Y | Y | Y | Y | Y | Y | Y |
 | Auto-activate every session | Y | Y¹ | Y | —² | —² | —² | —² |
-| `/caveman` command | Y | Y¹ | Y | — | — | — | — |
-| Mode switching (lite/full/ultra) | Y | Y¹ | Y | Y³ | Y³ | — | — |
+| `/laconic` command | Y | Y¹ | Y | — | — | — | — |
+| Mode switching (terse/balanced) | Y | Y¹ | Y | Y³ | Y³ | — | — |
 | Statusline badge | Y⁴ | — | — | — | — | — | — |
-| caveman-commit | Y | — | Y | Y | Y | Y | Y |
-| caveman-review | Y | — | Y | Y | Y | Y | Y |
-| caveman-compress | Y | Y | Y | Y | Y | Y | Y |
-| caveman-help | Y | — | Y | Y | Y | Y | Y |
+| laconic-commit | Y | — | Y | Y | Y | Y | Y |
+| laconic-review | Y | — | Y | Y | Y | Y | Y |
+| laconic-compress | Y | Y | Y | Y | Y | Y | Y |
+| laconic-help | Y | — | Y | Y | Y | Y | Y |
 
 > [!NOTE]
 > Auto-activation works differently per agent: Claude Code uses SessionStart hooks, this repo's Codex dogfood setup uses `.codex/hooks.json`, Gemini uses context files. Cursor/Windsurf/Cline/Copilot can be made always-on, but `npx skills add` installs only the skill, not the repo rule/instruction files.
 >
-> ¹ Codex uses `$caveman` syntax, not `/caveman`. This repo ships `.codex/hooks.json`, so caveman auto-starts when you run Codex inside this repo. The installed plugin itself gives you `$caveman`; copy the same hook into another repo if you want always-on behavior there too. caveman-commit and caveman-review are not in the Codex plugin bundle — use the SKILL.md files directly.
+> ¹ Codex uses `$laconic` syntax, not `/laconic`. This repo ships `.codex/hooks.json`, so Laconic auto-starts when you run Codex inside this repo. The installed plugin gives you `$laconic`. `laconic-commit` and `laconic-review` are not in the Codex plugin bundle — use the SKILL.md files directly.
 > ² Add the "Want it always on?" snippet below to those agents' system prompt or rule file if you want session-start activation.
-> ³ Cursor and Windsurf receive the full SKILL.md with all intensity levels. Mode switching works on-demand via the skill; no slash command.
+> ³ Cursor and Windsurf receive the full SKILL.md with Laconic modes. Mode switching works on-demand via the skill; no slash command.
 > ⁴ Available in Claude Code, but plugin install only nudges setup. Standalone `install.sh` / `install.ps1` configures it automatically when no custom `statusLine` exists.
 
 <details>
 <summary><strong>Claude Code — full details</strong></summary>
 
-The plugin install gives you skills + auto-loading hooks. If no custom `statusLine` is configured, Caveman nudges Claude to offer badge setup on first session.
+The plugin install gives you skills + auto-loading hooks. If no custom `statusLine` is configured, Laconic nudges Claude to offer badge setup on first session.
 
 ```bash
-claude plugin marketplace add JuliusBrussee/caveman
-claude plugin install caveman@caveman
+claude plugin marketplace add bruno335548975/laconic
+claude plugin install laconic@laconic
 ```
 
 **Standalone hooks (without plugin):** If you prefer not to use the plugin system:
 ```bash
 # macOS / Linux / WSL
-bash <(curl -s https://raw.githubusercontent.com/JuliusBrussee/caveman/main/hooks/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/bruno335548975/laconic/main/hooks/install.sh)
 
 # Windows (PowerShell)
-irm https://raw.githubusercontent.com/JuliusBrussee/caveman/main/hooks/install.ps1 | iex
+irm https://raw.githubusercontent.com/bruno335548975/laconic/main/hooks/install.ps1 | iex
 ```
 
 Or from a local clone: `bash hooks/install.sh` / `powershell -File hooks\install.ps1`
 
 Uninstall: `bash hooks/uninstall.sh` or `powershell -File hooks\uninstall.ps1`
 
-**Statusline badge:** Shows `[CAVEMAN]`, `[CAVEMAN:ULTRA]`, etc. in your Claude Code status bar.
+**Statusline badge:** Shows `[LACONIC]`, `[LACONIC:BALANCED]`, etc. in your Claude Code status bar.
 
 - **Plugin install:** If you do not already have a custom `statusLine`, Claude should offer to configure it on first session
 - **Standalone install:** Configured automatically by `install.sh` / `install.ps1` unless you already have a custom statusline
@@ -205,15 +187,15 @@ Uninstall: `bash hooks/uninstall.sh` or `powershell -File hooks\uninstall.ps1`
 <summary><strong>Codex — full details</strong></summary>
 
 **macOS / Linux:**
-1. Clone repo → Open Codex in the repo directory → `/plugins` → Search "Caveman" → Install
+1. Clone repo → Open Codex in the repo directory → `/plugins` → Search "Laconic" → Install
 2. Repo-local auto-start is already wired by `.codex/hooks.json` + `.codex/config.toml`
 
 **Windows:**
 1. Enable symlinks first: `git config --global core.symlinks true` (requires Developer Mode or admin)
-2. Clone repo → Open VS Code → Codex Settings → Plugins → find "Caveman" under local marketplace → Install → Reload Window
-3. Codex hooks are currently disabled on Windows, so use `$caveman` to start manually
+2. Clone repo → Open VS Code → Codex Settings → Plugins → find "Laconic" under local marketplace → Install → Reload Window
+3. Codex hooks are currently disabled on Windows, so use `$laconic` to start manually
 
-This repo also ships `.codex/hooks.json` and enables hooks in `.codex/config.toml`, so caveman auto-activates while you run Codex inside this repo on macOS/Linux. The installed plugin gives you `$caveman`; if you want always-on behavior in other repos too, copy the same `SessionStart` hook there and enable:
+This repo also ships `.codex/hooks.json` and enables hooks in `.codex/config.toml`, so Laconic auto-activates while you run Codex inside this repo on macOS/Linux. The installed plugin gives you `$laconic`. If you want always-on behavior in other repos too, copy the same `SessionStart` hook there and enable:
 
 ```toml
 [features]
@@ -226,31 +208,32 @@ codex_hooks = true
 <summary><strong>Gemini CLI — full details</strong></summary>
 
 ```bash
-gemini extensions install https://github.com/JuliusBrussee/caveman
+gemini extensions install https://github.com/bruno335548975/laconic
 ```
 
-Update: `gemini extensions update caveman` · Uninstall: `gemini extensions uninstall caveman`
+Update: `gemini extensions update laconic` · Uninstall: `gemini extensions uninstall laconic`
 
 Auto-activates via `GEMINI.md` context file. Also ships custom Gemini commands:
-- `/caveman` — switch intensity level (lite/full/ultra/wenyan)
-- `/caveman-commit` — generate terse commit message
-- `/caveman-review` — one-line code review
+- `/laconic` — switch to canonical terse mode
+- `/laconic balanced` — switch to balanced mode
+- `/laconic-commit` — generate terse commit message
+- `/laconic-review` — one-line code review
 
 </details>
 
 <details>
 <summary><strong>Cursor / Windsurf / Cline / Copilot — full details</strong></summary>
 
-`npx skills add` installs the skill file only — it does **not** install the agent's rule/instruction file, so caveman does not auto-start. For always-on, add the "Want it always on?" snippet below to your agent's rules or system prompt.
+`npx skills add` installs the skill file only — it does **not** install the agent's rule/instruction file, so Laconic does not auto-start. For always-on, add the "Want it always on?" snippet below to your agent's rules or system prompt.
 
 | Agent | Command | Not installed | Mode switching | Always-on location |
 |-------|---------|--------------|:--------------:|--------------------|
-| Cursor | `npx skills add JuliusBrussee/caveman -a cursor` | `.cursor/rules/caveman.mdc` | Y | Cursor rules |
-| Windsurf | `npx skills add JuliusBrussee/caveman -a windsurf` | `.windsurf/rules/caveman.md` | Y | Windsurf rules |
-| Cline | `npx skills add JuliusBrussee/caveman -a cline` | `.clinerules/caveman.md` | — | Cline rules or system prompt |
-| Copilot | `npx skills add JuliusBrussee/caveman -a github-copilot` | `.github/copilot-instructions.md` + `AGENTS.md` | — | Copilot custom instructions |
+| Cursor | `npx skills add bruno335548975/laconic -a cursor` | `.cursor/rules/laconic.mdc` | Y | Cursor rules |
+| Windsurf | `npx skills add bruno335548975/laconic -a windsurf` | `.windsurf/rules/laconic.md` | Y | Windsurf rules |
+| Cline | `npx skills add bruno335548975/laconic -a cline` | `.clinerules/laconic.md` | — | Cline rules or system prompt |
+| Copilot | `npx skills add bruno335548975/laconic -a github-copilot` | `.github/copilot-instructions.md` + `AGENTS.md` | — | Copilot custom instructions |
 
-Uninstall: `npx skills remove caveman`
+Uninstall: `npx skills remove laconic`
 
 Copilot works with Chat, Edits, and Coding Agent.
 
@@ -262,37 +245,35 @@ Copilot works with Chat, Edits, and Coding Agent.
 [npx skills](https://github.com/vercel-labs/skills) supports 40+ agents:
 
 ```bash
-npx skills add JuliusBrussee/caveman           # auto-detect agent
-npx skills add JuliusBrussee/caveman -a amp
-npx skills add JuliusBrussee/caveman -a augment
-npx skills add JuliusBrussee/caveman -a goose
-npx skills add JuliusBrussee/caveman -a kiro-cli
-npx skills add JuliusBrussee/caveman -a roo
+npx skills add bruno335548975/laconic           # auto-detect agent
+npx skills add bruno335548975/laconic -a amp
+npx skills add bruno335548975/laconic -a augment
+npx skills add bruno335548975/laconic -a goose
+npx skills add bruno335548975/laconic -a kiro-cli
+npx skills add bruno335548975/laconic -a roo
 # ... and many more
 ```
 
-Uninstall: `npx skills remove caveman`
+Uninstall: `npx skills remove laconic`
 
-> **Windows note:** `npx skills` uses symlinks by default. If symlinks fail, add `--copy`: `npx skills add JuliusBrussee/caveman --copy`
+> **Windows note:** `npx skills` uses symlinks by default. If symlinks fail, add `--copy`: `npx skills add bruno335548975/laconic --copy`
 
-**Important:** These agents don't have a hook system, so caveman won't auto-start. Say `/caveman` or "talk like caveman" to activate each session.
+**Important:** These agents don't have a hook system, so Laconic won't auto-start. Say `/laconic` or `/laconic balanced` to activate each session.
 
-**Want it always on?** Paste this into your agent's system prompt or rules file — caveman will be active from the first message, every session:
+**Want it always on?** Paste this into your agent's system prompt or rules file — Laconic will be active from the first message, every session:
 
 ```
-Terse like caveman. Technical substance exact. Only fluff die.
-Drop: articles, filler (just/really/basically), pleasantries, hedging.
-Fragments OK. Short synonyms. Code unchanged.
-Pattern: [thing] [action] [reason]. [next step].
-ACTIVE EVERY RESPONSE. No revert after many turns. No filler drift.
-Code/commits/PRs: normal. Off: "stop caveman" / "normal mode".
+Use laconic mode. Preserve exact technical substance.
+Structure: Issue / Cause / Solution / Rationale.
+Telegraphic English OK when still readable. Code unchanged.
+ACTIVE EVERY RESPONSE. Off: "stop laconic", "plain english", or "normal mode".
 ```
 
 Where to put it:
 | Agent | File |
 |-------|------|
 | opencode | `.config/opencode/AGENTS.md` |
-| Roo | `.roo/rules/caveman.md` |
+| Roo | `.roo/rules/laconic.md` |
 | Amp | your workspace system prompt |
 | Others | your agent's system prompt or rules file |
 
@@ -301,30 +282,19 @@ Where to put it:
 ## Usage
 
 Trigger with:
-- `/caveman` or Codex `$caveman`
-- "talk like caveman"
-- "caveman mode"
+- `/laconic` or Codex `$laconic`
+- `/laconic balanced`
+- "laconic mode"
 - "less tokens please"
 
-Stop with: "stop caveman" or "normal mode"
+Stop with: "stop laconic", "plain english", or "normal mode"
 
 ### Intensity Levels
 
 | Level | Trigger | What it do |
 |-------|---------|------------|
-| **Lite** | `/caveman lite` | Drop filler, keep grammar. Professional but no fluff |
-| **Full** | `/caveman full` | Default caveman. Drop articles, fragments, full grunt |
-| **Ultra** | `/caveman ultra` | Maximum compression. Telegraphic. Abbreviate everything |
-
-### 文言文 (Wenyan) Mode
-
-Classical Chinese literary compression — same technical accuracy, but in the most token-efficient written language humans ever invented.
-
-| Level | Trigger | What it do |
-|-------|---------|------------|
-| **Wenyan-Lite** | `/caveman wenyan-lite` | Semi-classical. Grammar intact, filler gone |
-| **Wenyan-Full** | `/caveman wenyan` | Full 文言文. Maximum classical terseness |
-| **Wenyan-Ultra** | `/caveman wenyan-ultra` | Extreme. Ancient scholar on a budget |
+| **Terse** | `/laconic` or `/laconic terse` | Default Laconic mode. Strong compression with readable structure |
+| **Balanced** | `/laconic balanced` | More connective words for complex topics while staying concise |
 
 Level stick until you change it or session end.
 
@@ -332,24 +302,24 @@ Level stick until you change it or session end.
 
 ### laconic-commit
 
-`/caveman-commit` — terse commit messages. Conventional Commits. ≤50 char subject. Why over what.
+`/laconic-commit` — terse commit messages. Conventional Commits. ≤50 char subject. Why over what.
 
-### caveman-review
+### laconic-review
 
-`/caveman-review` — one-line PR comments: `L42: 🔴 bug: user null. Add guard.` No throat-clearing.
+`/laconic-review` — one-line PR comments: `L42: 🔴 bug: user null. Add guard.` No throat-clearing.
 
-### caveman-help
+### laconic-help
 
-`/caveman-help` — quick-reference card. All modes, skills, commands, one command away.
+`/laconic-help` — quick-reference card. All modes, skills, commands, one command away.
 
-### caveman-compress
+### laconic-compress
 
-`/caveman:compress <filepath>` — caveman make Claude *speak* with fewer tokens. **Compress** make Claude *read* fewer tokens.
+`/laconic-compress <filepath>` — Laconic makes Claude *speak* with fewer tokens. **Compress** makes Claude *read* fewer tokens.
 
-Your `CLAUDE.md` loads on **every session start**. Caveman Compress rewrites memory files into caveman-speak so Claude reads less — without you losing the human-readable original.
+Your `CLAUDE.md` loads on **every session start**. Laconic Compress rewrites memory files into compact prose so Claude reads less — without you losing the human-readable original.
 
 ```
-/caveman:compress CLAUDE.md
+/laconic-compress CLAUDE.md
 ```
 
 ```
@@ -366,7 +336,7 @@ CLAUDE.original.md ← human-readable backup (you read and edit this)
 | `mixed-with-code.md` | 888 | 560 | **36.9%** |
 | **Average** | **898** | **481** | **46%** |
 
-Code blocks, URLs, file paths, commands, headings, dates, version numbers — anything technical passes through untouched. Only prose gets compressed. See the full [caveman-compress README](caveman-compress/README.md) for details. [Security note](./caveman-compress/SECURITY.md): Snyk flags this as High Risk due to subprocess/file patterns — it's a false positive.
+Code blocks, URLs, file paths, commands, headings, dates, version numbers — anything technical passes through untouched. Only prose gets compressed. See the full [laconic-compress README](laconic-compress/README.md) for details. [Security note](./laconic-compress/SECURITY.md): Snyk flags this as High Risk due to subprocess/file patterns — it's a false positive.
 
 ## Benchmarks
 
@@ -464,9 +434,9 @@ uv run --with tiktoken python evals/measure.py
 
 ## Star This Repo
 
-If caveman save you mass token, mass money — leave mass star. ⭐
+If Laconic saves you tokens and money, leave a star. ⭐
 
-[![Star History Chart](https://api.star-history.com/svg?repos=JuliusBrussee/caveman&type=Date)](https://star-history.com/#JuliusBrussee/caveman&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=bruno335548975/laconic&type=Date)](https://star-history.com/#bruno335548975/laconic&Date)
 
 ## 🪨 The Caveman Ecosystem
 
@@ -474,11 +444,11 @@ Three tools. One philosophy: **agent do more with less**.
 
 | Repo | What | One-liner |
 |------|------|-----------|
-| [**caveman**](https://github.com/JuliusBrussee/caveman) *(you are here)* | Output compression skill | *why use many token when few do trick* — ~75% fewer output tokens across Claude Code, Cursor, Gemini, Codex |
+| [**laconic**](https://github.com/bruno335548975/laconic) *(you are here)* | Output compression skill | Structured brevity with clear reasoning — ~65-80% fewer output tokens across Claude Code, Cursor, Gemini, Codex |
 | [**cavemem**](https://github.com/JuliusBrussee/cavemem) | Cross-agent persistent memory | *why agent forget when agent can remember* — compressed SQLite + MCP, local by default |
 | [**cavekit**](https://github.com/JuliusBrussee/cavekit) | Spec-driven autonomous build loop | *why agent guess when agent can know* — natural language → kits → parallel build → verified |
 
-They compose: **cavekit** orchestrates the build, **caveman** compresses what the agent *says*, **cavemem** compresses what the agent *remembers*. Install one, some, or all — each stands alone.
+Install one or combine with other tooling as needed — each stands alone.
 
 ## Also by Julius Brussee
 

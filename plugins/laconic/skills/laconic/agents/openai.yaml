@@ -1,0 +1,6 @@
+interface:
+  display_name: "Laconic"
+  short_description: "Structured concise answers. Cut filler. Keep technical accuracy."
+  icon_small: "./assets/laconic-small.svg"
+  icon_large: "./assets/laconic.svg"
+  default_prompt: "Use $laconic to answer briefly with structured clarity and exact technical substance."

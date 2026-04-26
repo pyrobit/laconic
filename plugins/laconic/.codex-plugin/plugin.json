@@ -1,0 +1,39 @@
+{
+  "name": "laconic",
+  "version": "0.1.0",
+  "description": "Structured concise communication mode. Cut filler. Keep clarity and technical accuracy.",
+  "author": {
+    "name": "Julius Brussee",
+    "url": "https://github.com/bruno335548975"
+  },
+  "homepage": "https://github.com/bruno335548975/laconic",
+  "repository": "https://github.com/bruno335548975/laconic",
+  "license": "MIT",
+  "keywords": [
+    "productivity",
+    "communication",
+    "brevity",
+    "writing"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Laconic",
+    "shortDescription": "Structured concise answers. Cut filler. Keep technical accuracy.",
+    "longDescription": "User-friendly compression mode for Codex. Use fewer words while preserving rigor and clarity.",
+    "developerName": "Bruno",
+    "category": "Productivity",
+    "capabilities": [
+      "Write"
+    ],
+    "websiteURL": "https://github.com/bruno335548975/laconic",
+    "privacyPolicyURL": "https://github.com/bruno335548975/laconic/blob/main/README.md",
+    "termsOfServiceURL": "https://github.com/bruno335548975/laconic/blob/main/LICENSE",
+    "defaultPrompt": [
+      "Use $laconic. Prefer terse structured answers with exact technical substance."
+    ],
+    "composerIcon": "./assets/caveman-small.svg",
+    "logo": "./assets/caveman.svg",
+    "screenshots": [],
+    "brandColor": "#6B7280"
+  }
+}

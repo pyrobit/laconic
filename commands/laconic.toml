@@ -1,0 +1,2 @@
+description = "Switch Laconic mode (terse/balanced)"
+prompt = "Switch to laconic {{args}} mode. If no level specified, use terse. Use Issue/Cause/Solution/Rationale. Telegraphic English OK. Preserve exact technical substance. Code unchanged."

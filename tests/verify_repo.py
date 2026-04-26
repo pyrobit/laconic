@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Local verification runner for caveman install surfaces."""
+"""Local verification runner for laconic install surfaces."""
 
 from __future__ import annotations
 
@@ -62,33 +62,33 @@ def read_json(path: Path) -> object:
 
 def verify_synced_files() -> None:
     section("Synced Files")
-    skill_source = ROOT / "skills/caveman/SKILL.md"
-    rule_source = ROOT / "rules/caveman-activate.md"
+    skill_source = ROOT / "skills/laconic/SKILL.md"
+    rule_source = ROOT / "rules/laconic-activate.md"
 
     skill_copies = [
-        ROOT / "caveman/SKILL.md",
-        ROOT / "plugins/caveman/skills/caveman/SKILL.md",
-        ROOT / ".cursor/skills/caveman/SKILL.md",
-        ROOT / ".windsurf/skills/caveman/SKILL.md",
+        ROOT / "laconic/SKILL.md",
+        ROOT / "plugins/laconic/skills/laconic/SKILL.md",
+        ROOT / ".cursor/skills/laconic/SKILL.md",
+        ROOT / ".windsurf/skills/laconic/SKILL.md",
     ]
     for copy in skill_copies:
         ensure(copy.read_text() == skill_source.read_text(), f"Skill copy mismatch: {copy}")
 
     rule_copies = [
-        ROOT / ".clinerules/caveman.md",
+        ROOT / ".clinerules/laconic.md",
         ROOT / ".github/copilot-instructions.md",
     ]
     for copy in rule_copies:
         ensure(copy.read_text() == rule_source.read_text(), f"Rule copy mismatch: {copy}")
 
-    with zipfile.ZipFile(ROOT / "caveman.skill") as archive:
-        ensure("caveman/SKILL.md" in archive.namelist(), "caveman.skill missing caveman/SKILL.md")
+    with zipfile.ZipFile(ROOT / "laconic.skill") as archive:
+        ensure("laconic/SKILL.md" in archive.namelist(), "laconic.skill missing laconic/SKILL.md")
         ensure(
-            archive.read("caveman/SKILL.md").decode("utf-8") == skill_source.read_text(),
-            "caveman.skill payload mismatch",
+            archive.read("laconic/SKILL.md").decode("utf-8") == skill_source.read_text(),
+            "laconic.skill payload mismatch",
         )
 
-    print("Synced copies and caveman.skill zip OK")
+    print("Synced copies and laconic.skill zip OK")
 
 
 def verify_manifests_and_syntax() -> None:
@@ -100,23 +100,23 @@ def verify_manifests_and_syntax() -> None:
         ROOT / ".claude-plugin/marketplace.json",
         ROOT / ".codex/hooks.json",
         ROOT / "gemini-extension.json",
-        ROOT / "plugins/caveman/.codex-plugin/plugin.json",
+        ROOT / "plugins/laconic/.codex-plugin/plugin.json",
     ]
     for path in manifest_paths:
         read_json(path)
 
-    run(["node", "--check", "hooks/caveman-config.js"])
-    run(["node", "--check", "hooks/caveman-activate.js"])
-    run(["node", "--check", "hooks/caveman-mode-tracker.js"])
+    run(["node", "--check", "hooks/laconic-config.js"])
+    run(["node", "--check", "hooks/laconic-activate.js"])
+    run(["node", "--check", "hooks/laconic-mode-tracker.js"])
     run(["bash", "-n", "hooks/install.sh"])
     run(["bash", "-n", "hooks/uninstall.sh"])
-    run(["bash", "-n", "hooks/caveman-statusline.sh"])
+    run(["bash", "-n", "hooks/laconic-statusline.sh"])
 
-    # Ensure install/uninstall scripts include caveman-config.js
+    # Ensure install/uninstall scripts include laconic-config.js
     install_sh = (ROOT / "hooks/install.sh").read_text()
     uninstall_sh = (ROOT / "hooks/uninstall.sh").read_text()
-    ensure("caveman-config.js" in install_sh, "install.sh missing caveman-config.js")
-    ensure("caveman-config.js" in uninstall_sh, "uninstall.sh missing caveman-config.js")
+    ensure("laconic-config.js" in install_sh, "install.sh missing laconic-config.js")
+    ensure("laconic-config.js" in uninstall_sh, "uninstall.sh missing laconic-config.js")
 
     print("JSON manifests and JS/bash syntax OK")
 
@@ -125,24 +125,24 @@ def verify_powershell_static() -> None:
     section("PowerShell Static Checks")
     install_text = (ROOT / "hooks/install.ps1").read_text()
     uninstall_text = (ROOT / "hooks/uninstall.ps1").read_text()
-    statusline_text = (ROOT / "hooks/caveman-statusline.ps1").read_text()
+    statusline_text = (ROOT / "hooks/laconic-statusline.ps1").read_text()
 
-    ensure("caveman-config.js" in install_text, "install.ps1 missing caveman-config.js")
-    ensure("caveman-config.js" in uninstall_text, "uninstall.ps1 missing caveman-config.js")
-    ensure("caveman-statusline.ps1" in install_text, "install.ps1 missing statusline.ps1")
-    ensure("caveman-statusline.ps1" in uninstall_text, "uninstall.ps1 missing statusline.ps1")
+    ensure("laconic-config.js" in install_text, "install.ps1 missing laconic-config.js")
+    ensure("laconic-config.js" in uninstall_text, "uninstall.ps1 missing laconic-config.js")
+    ensure("laconic-statusline.ps1" in install_text, "install.ps1 missing statusline.ps1")
+    ensure("laconic-statusline.ps1" in uninstall_text, "uninstall.ps1 missing statusline.ps1")
     ensure("-AsHashtable" not in install_text, "install.ps1 should stay compatible with Windows PowerShell 5.1")
     ensure(
         "powershell -ExecutionPolicy Bypass -File" in install_text,
         "install.ps1 missing PowerShell statusline command",
     )
-    ensure("[CAVEMAN" in statusline_text, "caveman-statusline.ps1 missing badge output")
+    ensure("[LACONIC" in statusline_text, "laconic-statusline.ps1 missing badge output")
 
     print("Windows install path statically wired")
 
 
 def load_compress_modules():
-    sys.path.insert(0, str(ROOT / "caveman-compress"))
+    sys.path.insert(0, str(ROOT / "laconic-compress"))
     import scripts.benchmark  # noqa: F401
     import scripts.cli as cli
     import scripts.compress  # noqa: F401
@@ -156,8 +156,8 @@ def verify_compress_fixtures() -> None:
     section("Compress Fixtures")
     _, detect, validate = load_compress_modules()
 
-    fixtures = sorted((ROOT / "tests/caveman-compress").glob("*.original.md"))
-    ensure(fixtures, "No caveman-compress fixtures found")
+    fixtures = sorted((ROOT / "tests/laconic-compress").glob("*.original.md"))
+    ensure(fixtures, "No laconic-compress fixtures found")
 
     for original in fixtures:
         compressed = original.with_name(original.name.replace(".original.md", ".md"))
@@ -166,7 +166,7 @@ def verify_compress_fixtures() -> None:
         ensure(result.is_valid, f"Fixture validation failed for {compressed.name}: {result.errors}")
         ensure(detect.should_compress(compressed), f"Fixture should be compressible: {compressed.name}")
 
-    print(f"Validated {len(fixtures)} caveman-compress fixture pairs")
+    print(f"Validated {len(fixtures)} laconic-compress fixture pairs")
 
 
 def verify_compress_cli() -> None:
@@ -174,7 +174,7 @@ def verify_compress_cli() -> None:
 
     skip_result = run(
         ["python3", "-m", "scripts", "../hooks/install.sh"],
-        cwd=ROOT / "caveman-compress",
+        cwd=ROOT / "laconic-compress",
         check=False,
     )
     ensure(skip_result.returncode == 0, "compress CLI skip path should exit 0")
@@ -186,7 +186,7 @@ def verify_compress_cli() -> None:
 
     missing_result = run(
         ["python3", "-m", "scripts", "../does-not-exist.md"],
-        cwd=ROOT / "caveman-compress",
+        cwd=ROOT / "laconic-compress",
         check=False,
     )
     ensure(missing_result.returncode == 1, "compress CLI missing-file path should exit 1")
@@ -201,7 +201,7 @@ def verify_hook_install_flow() -> None:
     ensure(shutil.which("node") is not None, "node is required for hook verification")
     ensure(shutil.which("bash") is not None, "bash is required for hook verification")
 
-    with tempfile.TemporaryDirectory(prefix="caveman-verify-") as temp_root:
+    with tempfile.TemporaryDirectory(prefix="laconic-verify-") as temp_root:
         temp_root_path = Path(temp_root)
         home = temp_root_path / "home"
         claude_dir = home / ".claude"
@@ -222,63 +222,55 @@ def verify_hook_install_flow() -> None:
         ensure("UserPromptSubmit" in hooks, "UserPromptSubmit hook missing after install")
 
         activate = run(
-            ["node", "hooks/caveman-activate.js"],
+            ["node", "hooks/laconic-activate.js"],
             env={"HOME": str(home)},
         )
-        ensure("CAVEMAN MODE ACTIVE." in activate.stdout, "activation output missing caveman banner")
+        ensure("LACONIC MODE ACTIVE" in activate.stdout, "activation output missing laconic banner")
         ensure("STATUSLINE SETUP NEEDED" not in activate.stdout, "activation should stay quiet when custom statusline exists")
-        ensure((claude_dir / ".caveman-active").read_text() == "full", "activation flag should default to full")
+        ensure((claude_dir / ".laconic-active").read_text() == "terse", "activation flag should default to terse")
 
-        # Test configurable default mode via CAVEMAN_DEFAULT_MODE env var
+        # Test configurable default mode via LACONIC_DEFAULT_MODE env var
         activate_custom = run(
-            ["node", "hooks/caveman-activate.js"],
-            env={"HOME": str(home), "CAVEMAN_DEFAULT_MODE": "ultra"},
+            ["node", "hooks/laconic-activate.js"],
+            env={"HOME": str(home), "LACONIC_DEFAULT_MODE": "balanced"},
         )
-        ensure("CAVEMAN MODE ACTIVE." in activate_custom.stdout, "activation with custom default missing banner")
-        ensure((claude_dir / ".caveman-active").read_text() == "ultra", "CAVEMAN_DEFAULT_MODE=ultra should set flag to ultra")
+        ensure("LACONIC MODE ACTIVE" in activate_custom.stdout, "activation with custom default missing banner")
+        ensure((claude_dir / ".laconic-active").read_text() == "balanced", "LACONIC_DEFAULT_MODE=balanced should set flag to balanced")
         # Test "off" mode — activation skipped, flag removed
         activate_off = run(
-            ["node", "hooks/caveman-activate.js"],
-            env={"HOME": str(home), "CAVEMAN_DEFAULT_MODE": "off"},
+            ["node", "hooks/laconic-activate.js"],
+            env={"HOME": str(home), "LACONIC_DEFAULT_MODE": "off"},
         )
-        ensure("CAVEMAN MODE ACTIVE." not in activate_off.stdout, "off mode should not emit caveman banner")
-        ensure(not (claude_dir / ".caveman-active").exists(), "off mode should remove flag file")
+        ensure("LACONIC MODE ACTIVE" not in activate_off.stdout, "off mode should not emit laconic banner")
+        ensure(not (claude_dir / ".laconic-active").exists(), "off mode should remove flag file")
 
-        # Test mode tracker with /caveman when default is off — should NOT write flag
-        subprocess.run(
-            ["node", "hooks/caveman-mode-tracker.js"],
-            cwd=ROOT,
-            env={**os.environ, "HOME": str(home), "CAVEMAN_DEFAULT_MODE": "off"},
-            text=True,
-            input='{"prompt":"/caveman"}',
-            capture_output=True,
-            check=True,
-        )
-        ensure(not (claude_dir / ".caveman-active").exists(), "/caveman with off default should not write flag")
-
-        # Reset back to full for subsequent tests
-        (claude_dir / ".caveman-active").write_text("full")
+        # Reset back to terse for subsequent tests
+        (claude_dir / ".laconic-active").write_text("terse")
 
         run(
-            ["node", "hooks/caveman-mode-tracker.js"],
+            ["node", "hooks/laconic-mode-tracker.js"],
             env={"HOME": str(home)},
             check=True,
         )
 
-        ultra_prompt = subprocess.run(
-            ["node", "hooks/caveman-mode-tracker.js"],
+        balanced_prompt = subprocess.run(
+            ["node", "hooks/laconic-mode-tracker.js"],
             cwd=ROOT,
             env={**os.environ, "HOME": str(home)},
             text=True,
-            input='{"prompt":"/caveman ultra"}',
+            input='{"prompt":"/laconic balanced"}',
             capture_output=True,
             check=True,
         )
-        ensure(ultra_prompt.stdout == "", "mode tracker should stay silent")
-        ensure((claude_dir / ".caveman-active").read_text() == "ultra", "mode tracker did not record ultra")
+        balanced_payload = json.loads(balanced_prompt.stdout)
+        ensure(
+            balanced_payload["hookSpecificOutput"]["additionalContext"].startswith("LACONIC MODE ACTIVE (balanced)."),
+            "mode tracker reinforcement output mismatch",
+        )
+        ensure((claude_dir / ".laconic-active").read_text() == "balanced", "mode tracker did not record balanced")
 
         subprocess.run(
-            ["node", "hooks/caveman-mode-tracker.js"],
+            ["node", "hooks/laconic-mode-tracker.js"],
             cwd=ROOT,
             env={**os.environ, "HOME": str(home)},
             text=True,
@@ -286,30 +278,30 @@ def verify_hook_install_flow() -> None:
             capture_output=True,
             check=True,
         )
-        ensure(not (claude_dir / ".caveman-active").exists(), "normal mode should remove flag file")
+        ensure(not (claude_dir / ".laconic-active").exists(), "normal mode should remove flag file")
 
-        (claude_dir / ".caveman-active").write_text("wenyan-ultra")
+        (claude_dir / ".laconic-active").write_text("balanced")
         statusline = run(
-            ["bash", "hooks/caveman-statusline.sh"],
+            ["bash", "hooks/laconic-statusline.sh"],
             env={"HOME": str(home)},
         )
-        ensure("[CAVEMAN:WENYAN-ULTRA]" in statusline.stdout, "statusline badge output mismatch")
+        ensure("[LACONIC:BALANCED]" in statusline.stdout, "statusline badge output mismatch")
 
         reinstall = run(["bash", "hooks/install.sh"], env={"HOME": str(home)})
         ensure("Nothing to do" in reinstall.stdout, "install.sh should be idempotent")
 
         run(["bash", "hooks/uninstall.sh"], env={"HOME": str(home)})
         settings_after = read_json(claude_dir / "settings.json")
-        ensure(settings_after == existing_settings, "uninstall.sh did not restore non-caveman settings")
-        ensure(not (claude_dir / ".caveman-active").exists(), "uninstall.sh should remove flag file")
+        ensure(settings_after == existing_settings, "uninstall.sh did not restore non-laconic settings")
+        ensure(not (claude_dir / ".laconic-active").exists(), "uninstall.sh should remove flag file")
 
-    with tempfile.TemporaryDirectory(prefix="caveman-verify-fresh-") as temp_root:
+    with tempfile.TemporaryDirectory(prefix="laconic-verify-fresh-") as temp_root:
         home = Path(temp_root) / "home"
         run(["bash", "hooks/install.sh"], env={"HOME": str(home)})
         claude_dir = home / ".claude"
         settings = read_json(claude_dir / "settings.json")
         ensure("statusLine" in settings, "fresh install should configure statusline")
-        activate = run(["node", "hooks/caveman-activate.js"], env={"HOME": str(home)})
+        activate = run(["node", "hooks/laconic-activate.js"], env={"HOME": str(home)})
         ensure("STATUSLINE SETUP NEEDED" not in activate.stdout, "fresh install should not nudge for statusline")
         run(["bash", "hooks/uninstall.sh"], env={"HOME": str(home)})
         ensure(read_json(claude_dir / "settings.json") == {}, "fresh uninstall should leave empty settings")
