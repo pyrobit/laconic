@@ -42,14 +42,14 @@ Laconic uses telegraphic English and symbols where helpful, cuts **~65-80% of ou
 <tr>
 <td width="50%">
 
-### 🗣️ Normal Claude (69 tokens)
+### 🗣️ Normal Codex (69 tokens)
 
-> "The reason your React component is re-rendering is likely because you're creating a new object reference on each render cycle. When you pass an inline object as a prop, React's shallow comparison sees it as a different object every time, which triggers a re-render. I'd recommend using useMemo to memoize the object."
+> "Your component re-renders because the inline object prop gets a new reference on every render. React's shallow comparison sees a different object each time, so it re-renders the child. Move that object behind `useMemo` so the reference stays stable unless its dependencies change."
 
 </td>
 <td width="50%">
 
-### ⚡ Laconic Claude (28 tokens)
+### ⚡ Laconic Codex (28 tokens)
 
 > "**Issue:** Inline object prop causes React re-renders. **Cause:** ∀ render: ref({k:v}) ≠ prior ⇒ !shallowEqual ⇒ re-render(C). **Solution:** const p = useMemo(() => ({k: v}), [deps]). **Rationale:** Memoized ref remains stable across renders."
 
@@ -58,14 +58,14 @@ Laconic uses telegraphic English and symbols where helpful, cuts **~65-80% of ou
 <tr>
 <td>
 
-### 🗣️ Normal Claude
+### 🗣️ Normal Codex
 
-> "Sure! I'd be happy to help you with that. The issue you're experiencing is most likely caused by your authentication middleware not properly validating the token expiry. Let me take a look and suggest a fix."
+> "The auth middleware expiry check is off by one. It uses `<` where `<=` is needed, so a token at its exact expiry boundary can still pass validation. Change the comparison to `<=` so expired tokens are rejected consistently."
 
 </td>
 <td>
 
-### ⚡ Laconic Claude
+### ⚡ Laconic Codex
 
 > "**Issue:** Auth middleware token expiry bug. **Cause:** Check uses `<` instead of `<=`. **Solution:** Change to `<=`. **Rationale:** Ensures expiry is handled correctly."
 
@@ -316,17 +316,17 @@ The level stays active until you change it or the session ends.
 
 ### laconic-compress
 
-`/laconic-compress <filepath>` — Laconic makes Claude *speak* with fewer tokens. **Compress** makes Claude *read* fewer tokens.
+`/laconic-compress <filepath>` — Laconic makes Codex *speak* with fewer tokens. **Compress** makes Codex *read* fewer tokens.
 
-Your `CLAUDE.md` loads on **every session start**. Laconic Compress rewrites memory files into compact prose so Claude reads less, while keeping a human-readable backup.
-
-```
-/laconic-compress CLAUDE.md
-```
+For Codex repos, `AGENTS.md` is prime target. Laconic Compress rewrites memory files into compact prose so Codex reads less, while keeping a human-readable backup.
 
 ```
-CLAUDE.md          ← compressed (Claude reads this every session — fewer tokens)
-CLAUDE.original.md ← human-readable backup (you read and edit this)
+/laconic-compress AGENTS.md
+```
+
+```
+AGENTS.md          ← compressed (Codex reads this in repo context — fewer tokens)
+AGENTS.original.md ← human-readable backup (you read and edit this)
 ```
 
 | File | Original | Compressed | Saved |
