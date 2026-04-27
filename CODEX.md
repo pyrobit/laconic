@@ -1,8 +1,8 @@
-# CLAUDE.md — laconic
+# CODEX.md — laconic
 
 ## README is a product artifact
 
-README is the product front door. Non-technical people read it to decide if Laconic is worth installing. Treat it like UI copy.
+README is product front door. Non-technical people read it to decide if Laconic is worth installing. Treat it like UI copy.
 
 Rules for README changes:
 - Keep install paths complete and accurate.
@@ -43,24 +43,25 @@ Synced copies:
 | `skills/laconic-compress/` | `laconic-compress/` |
 | `plugins/laconic/skills/laconic-compress/` | `laconic-compress/` |
 
-## Hook system
+## Codex runtime
 
-Claude Code hooks live in `hooks/` and use `laconic-config.js` as the shared module.
+Repo-local Codex activation lives in `.codex/` and plugin assets live in `plugins/laconic/`.
 
-- Flag file: `$CLAUDE_CONFIG_DIR/.laconic-active` or `~/.claude/.laconic-active`
-- SessionStart hook: `hooks/laconic-activate.js`
-- UserPromptSubmit hook: `hooks/laconic-mode-tracker.js`
-- Statusline: `hooks/laconic-statusline.sh` and `hooks/laconic-statusline.ps1`
+- Hook config: `.codex/hooks.json`
+- Feature flag: `.codex/config.toml`
+- Plugin bundle: `plugins/laconic/`
+- Command surface: `$laconic`
 
 Behavior:
-- Session start writes the current Laconic mode and emits hidden rule text.
-- Prompt submit tracks `/laconic`, `/laconic balanced`, `/laconic-commit`, `/laconic-review`, and `/laconic-compress`.
-- Statusline shows `[LACONIC]` or `[LACONIC:<MODE>]`.
+- SessionStart hook emits Laconic activation rule on `startup|resume`.
+- `.codex/config.toml` enables repo-local hooks with `codex_hooks = true`.
+- Codex uses `$laconic`, not `/laconic`.
+- Repo-local auto-start works on macOS/Linux. On Windows, install plugin but start manually with `$laconic`.
 
-Security rules:
-- Any flag-file write must go through `safeWriteFlag()` in `hooks/laconic-config.js`.
-- Hooks must silent-fail on filesystem issues.
-- Hooks and installers must respect `CLAUDE_CONFIG_DIR`.
+Maintenance rules:
+- Keep `.codex/hooks.json` activation text aligned with `rules/laconic-activate.md`.
+- Keep hook command side-effect free beyond emitting rule text.
+- Preserve `.codex/config.toml` hook enablement unless user asks otherwise.
 
 ## Skills
 
@@ -75,6 +76,11 @@ Independent skills:
 - `laconic-compress`
 
 `laconic-compress` rewrites prose-heavy memory files, preserves code/URLs/paths, and saves `<filename>.original.md` backups.
+
+Codex notes:
+- Plugin bundle gives `$laconic`.
+- `laconic-commit` and `laconic-review` are not in Codex plugin bundle; use `SKILL.md` files directly.
+- For repo memory, `AGENTS.md` is usually higher-value than `CODEX.md`.
 
 ## Distribution
 
@@ -98,11 +104,11 @@ Independent skills:
 
 Honest comparison is skill vs `__terse__`, not skill vs baseline.
 
-`benchmarks/` runs real prompts through the Claude API and updates the README benchmark table from committed JSON results.
+`benchmarks/` runs real prompts through the Claude API and updates README benchmark table from committed JSON results.
 
 ## Working rules
 
 - Edit source files, then resync copies.
 - Keep naming Laconic-only. No Caveman compatibility surface remains.
 - Do not fabricate benchmark or eval numbers.
-- Preserve the README’s user-facing quality.
+- Preserve README’s user-facing quality.

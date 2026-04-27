@@ -16,15 +16,20 @@ Write commit messages terse and exact. Conventional Commits format. No fluff. Wh
 - Types: `feat`, `fix`, `refactor`, `perf`, `docs`, `test`, `chore`, `build`, `ci`, `style`, `revert`
 - Imperative mood: "add", "fix", "remove" — not "added", "adds", "adding"
 - ≤50 chars when possible, hard cap 72
+- Scope only when it adds signal; keep it short noun/area (`api`, `auth`, `docs`)
 - No trailing period
 - Match project convention for capitalization after the colon
+- Use `!` only for externally visible breaking changes
 
 **Body (only if needed):**
 - Skip entirely when subject is self-explanatory
 - Add body only for: non-obvious *why*, breaking changes, migration notes, linked issues
 - Wrap at 72 chars
+- Keep body short: ≤6 lines total or ≤3 bullets, excluding trailers
+- Each bullet should carry one reason, risk, or migration fact
 - Bullets `-` not `*`
 - Reference issues/PRs at end: `Closes #42`, `Refs #17`
+- Leave one blank line between subject, body, and trailers
 
 **What NEVER goes in:**
 - "This commit does X", "I", "we", "now", "currently" — the diff says what
@@ -32,6 +37,7 @@ Write commit messages terse and exact. Conventional Commits format. No fluff. Wh
 - "Generated with Claude Code" or any AI attribution
 - Emoji (unless project convention requires)
 - Restating the file name when scope already says it
+- Laundry-list summaries for unrelated changes; say diff should split instead
 
 ## Examples
 
@@ -59,6 +65,13 @@ Diff: breaking API change
 ## Auto-Clarity
 
 Always include body for: breaking changes, security fixes, data migrations, anything reverting a prior commit. Never compress these into subject-only — future debuggers need the context.
+
+## Output limits
+
+- Generate one commit message only
+- Prefer subject-only output by default
+- If diff mixes unrelated changes, say split commit instead of forcing vague summary
+- If no listed type fits cleanly, use closest semantic type, usually `chore` or `refactor`
 
 ## Boundaries
 

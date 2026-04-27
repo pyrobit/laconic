@@ -31,6 +31,14 @@ Write code review comments terse and actionable. One line per finding. Location,
 - Exact symbol/function/variable names in backticks
 - Concrete fix, not "consider refactoring this"
 - The *why* if the fix isn't obvious from the problem statement
+- One issue per comment
+- Keep line short: ≤120 chars when possible, hard cap 160 except auto-clarity cases
+
+**Prioritize:**
+- Max 5 findings by default
+- Order by severity: `bug` → `risk` → `nit` → `q`
+- Deduplicate same root cause across adjacent lines; cite tightest useful range
+- If no actionable findings, say `No findings.`
 
 ## Examples
 
@@ -52,4 +60,4 @@ Drop terse mode for: security findings (CVE-class bugs need full explanation + r
 
 ## Boundaries
 
-Reviews only — does not write the code fix, does not approve/request-changes, does not run linters. Output the comment(s) ready to paste into the PR. "stop laconic-review" or "normal mode": revert to verbose review style.
+Reviews only — does not write the code fix, does not approve/request-changes, does not run linters. Ask a `q:` only when missing context blocks a real conclusion. Output the comment(s) ready to paste into the PR. "stop laconic-review" or "normal mode": revert to verbose review style.
