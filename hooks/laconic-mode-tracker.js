@@ -44,6 +44,10 @@ process.stdin.on('end', () => {
       try { fs.unlinkSync(flagPath); } catch (e) {}
     }
 
+    if (/\bnormal thinking\b/i.test(lowered) && readFlag(flagPath) === 'think') {
+      try { fs.unlinkSync(flagPath); } catch (e) {}
+    }
+
     const activeMode = readFlag(flagPath);
     if (activeMode && !isIndependentMode(activeMode)) {
       process.stdout.write(JSON.stringify({

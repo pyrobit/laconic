@@ -25,6 +25,7 @@ Edit these files directly:
 | `skills/laconic-commit/SKILL.md` | Commit-message skill |
 | `skills/laconic-review/SKILL.md` | Review-comment skill |
 | `skills/laconic-help/SKILL.md` | Quick help card |
+| `skills/laconic-think/SKILL.md` | Internal-reasoning compression skill |
 | `laconic-compress/SKILL.md` | Compress skill behavior |
 
 Synced copies:
@@ -54,7 +55,7 @@ Claude Code hooks live in `hooks/` and use `laconic-config.js` as the shared mod
 
 Behavior:
 - Session start writes the current Laconic mode and emits hidden rule text.
-- Prompt submit tracks `/laconic`, `/laconic balanced`, `/laconic-commit`, `/laconic-review`, and `/laconic-compress`.
+- Prompt submit tracks `/laconic`, `/laconic balanced`, `/laconic-commit`, `/laconic-review`, `/laconic-think`, and `/laconic-compress`.
 - Statusline shows `[LACONIC]` or `[LACONIC:<MODE>]`.
 
 Security rules:
@@ -72,9 +73,20 @@ Independent skills:
 - `laconic-commit`
 - `laconic-review`
 - `laconic-help`
+- `laconic-think`
 - `laconic-compress`
 
 `laconic-compress` rewrites prose-heavy memory files, preserves code/URLs/paths, and saves `<filename>.original.md` backups.
+`laconic-think` compresses hidden reasoning while keeping final output clear.
+
+`laconic-think` best use cases:
+- Short debugging, triage, and routine refactors
+- Expert workflows where terse internal planning helps throughput
+
+`laconic-think` current limits:
+- Treat as skill-level guidance first, not guaranteed model/runtime behavior
+- Hook layer tracks `think` on/off only; no persisted `terse|balanced|draft` submode
+- Avoid as default for security-sensitive, high-stakes, or open-ended architecture work
 
 ## Distribution
 

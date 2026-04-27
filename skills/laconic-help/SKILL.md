@@ -25,6 +25,7 @@ Mode stick until changed or session end.
 |-------|---------|-----------|
 | **laconic-commit** | `/laconic-commit` | Terse commit messages. Conventional Commits. ≤50 char subject. |
 | **laconic-review** | `/laconic-review` | One-line PR comments: `L42: bug: user null. Add guard.` |
+| **laconic-think** | `/laconic-think` | Compress hidden reasoning. Final answer stay clear. |
 | **laconic-compress** | `/laconic-compress <file>` | Compress .md files to laconic prose. Saves input tokens. |
 | **laconic-help** | `/laconic-help` | This card. |
 

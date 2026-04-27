@@ -34,7 +34,7 @@ A user-friendly way to save tokens without losing rigor or clarity. Laconic is a
 
 This repo explores a different tradeoff: less compression, more structure. It may not be updated as often as Caveman. If you want the most efficient token reduction, use Caveman first.
 
-Laconic uses telegraphic English and symbols where helpful, cuts **~65-80% of output tokens**, and keeps technical accuracy. It also includes [terse commits](#laconic-commit), [structured reviews](#laconic-review), and more.
+Laconic uses telegraphic English and symbols where helpful, cuts **~65-80% of output tokens**, and keeps technical accuracy. It also includes [terse commits](#laconic-commit), [structured reviews](#laconic-review), [compressed internal reasoning](#laconic-think), and more.
 
 ## Before / After
 
@@ -143,13 +143,14 @@ Auto-activation is built in for Claude Code, Gemini CLI, and the repo-local Code
 | Statusline badge | Y⁴ | — | — | — | — | — | — |
 | laconic-commit | Y | — | Y | Y | Y | Y | Y |
 | laconic-review | Y | — | Y | Y | Y | Y | Y |
+| laconic-think | Y | — | Y | Y | Y | Y | Y |
 | laconic-compress | Y | Y | Y | Y | Y | Y | Y |
 | laconic-help | Y | — | Y | Y | Y | Y | Y |
 
 > [!NOTE]
 > Auto-activation works differently per agent: Claude Code uses SessionStart hooks, this repo's Codex dogfood setup uses `.codex/hooks.json`, Gemini uses context files. Cursor/Windsurf/Cline/Copilot can be made always-on, but `npx skills add` installs only the skill, not the repo rule/instruction files.
 >
-> ¹ Codex uses `$laconic` syntax, not `/laconic`. This repo ships `.codex/hooks.json`, so Laconic auto-starts when you run Codex inside this repo. The installed plugin gives you `$laconic`. `laconic-commit` and `laconic-review` are not in the Codex plugin bundle — use the SKILL.md files directly.
+> ¹ Codex uses `$laconic` syntax, not `/laconic`. This repo ships `.codex/hooks.json`, so Laconic auto-starts when you run Codex inside this repo. The installed plugin gives you `$laconic`. Auxiliary skills such as `laconic-commit`, `laconic-review`, `laconic-help`, and `laconic-think` are not in the Codex plugin bundle — use the SKILL.md files directly.
 > ² Add the "Want it always on?" snippet below to those agents' system prompt or rule file if you want session-start activation.
 > ³ Cursor and Windsurf receive the full SKILL.md with Laconic modes. Mode switching works on-demand via the skill; no slash command.
 > ⁴ Available in Claude Code, but plugin install only nudges setup. Standalone `install.sh` / `install.ps1` configures it automatically when no custom `statusLine` exists.
@@ -220,6 +221,7 @@ Auto-activates via the `GEMINI.md` context file. Also ships custom Gemini comman
 - `/laconic balanced` — switch to balanced mode
 - `/laconic-commit` — generate terse commit message
 - `/laconic-review` — one-line code review
+- `/laconic-think` — compress hidden reasoning
 
 </details>
 
@@ -286,6 +288,7 @@ Where to put it:
 Trigger with:
 - `/laconic` or Codex `$laconic`
 - `/laconic balanced`
+- `/laconic-think`
 - "laconic mode"
 - "less tokens please"
 
@@ -313,6 +316,20 @@ The level stays active until you change it or the session ends.
 ### laconic-help
 
 `/laconic-help` — quick-reference card. All modes, skills, commands, one command away.
+
+### laconic-think
+
+`/laconic-think` — compress hidden reasoning with fixed `Issue / Cause / Options / Best / Rationale` structure. Final answer stays clear; combine with `/laconic` when you also want terse user-facing output.
+
+Best fit:
+- Short debugging and root-cause analysis
+- Refactors where the plan is obvious but repetitive
+- High-volume expert workflows where you want less internal sprawl
+
+Current limits:
+- Best when the agent/runtime already supports hidden scratchpads or non-user-visible reasoning channels
+- Current hook/runtime tracking only records `think` on/off; it does not persist `terse|balanced|draft` submodes
+- Not ideal for security-sensitive, legal/medical/finance, incident response, or long architecture exploration where wider reasoning is safer
 
 ### laconic-compress
 
@@ -371,7 +388,7 @@ Laconic maintains **100% technical accuracy** across all benchmarks. The fixed s
 - **Structured clarity:** Laconic's **Issue/Cause/Solution/Rationale** format improves scanability and makes correctness easier to verify.
 
 > [!IMPORTANT]
-> Laconic only affects output tokens. Thinking and reasoning tokens stay untouched. Biggest win: **structured readability, speed, and clarity**. Cost savings are a bonus.
+> Base `/laconic` only affects output tokens. `/laconic-think` is separate, optional, and most effective on runtimes that already support hidden reasoning channels. Biggest win: **structured readability, speed, and clarity**. Cost savings are a bonus.
 
 A March 2026 paper, ["Brevity Constraints Reverse Performance Hierarchies in Language Models"](https://arxiv.org/abs/2604.00025), found that constraining large models to brief responses **improved accuracy by 26 percentage points** on some benchmarks and reversed performance hierarchies. Verbose is not always better. Sometimes less is more correct.
 

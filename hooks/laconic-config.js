@@ -16,7 +16,7 @@ const os = require('os');
 const FLAG_FILE_NAME = '.laconic-active';
 const DEFAULT_MODE = 'terse';
 const CANONICAL_PROSE_MODES = ['terse', 'balanced'];
-const INDEPENDENT_MODES = ['commit', 'review', 'compress'];
+const INDEPENDENT_MODES = ['commit', 'review', 'compress', 'think'];
 const VALID_MODES = ['off', ...CANONICAL_PROSE_MODES, ...INDEPENDENT_MODES];
 const COMMAND_MODE_ALIASES = {
   terse: 'terse',
@@ -100,6 +100,9 @@ function parseRuntimeCommand(prompt) {
   const directCommands = {
     '/laconic-commit': 'commit',
     '/laconic-review': 'review',
+    '/laconic-think': 'think',
+    '/laconic:think': 'think',
+    '/laconic:laconic-think': 'think',
     '/laconic-compress': 'compress',
     '/laconic:compress': 'compress',
     '/laconic:laconic-compress': 'compress',

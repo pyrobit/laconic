@@ -25,6 +25,7 @@ Edit these files directly:
 | `skills/laconic-commit/SKILL.md` | Commit-message skill |
 | `skills/laconic-review/SKILL.md` | Review-comment skill |
 | `skills/laconic-help/SKILL.md` | Quick help card |
+| `skills/laconic-think/SKILL.md` | Internal-reasoning compression skill |
 | `laconic-compress/SKILL.md` | Compress skill behavior |
 
 Synced copies:
@@ -73,14 +74,18 @@ Independent skills:
 - `laconic-commit`
 - `laconic-review`
 - `laconic-help`
+- `laconic-think`
 - `laconic-compress`
 
 `laconic-compress` rewrites prose-heavy memory files, preserves code/URLs/paths, and saves `<filename>.original.md` backups.
+`laconic-think` compresses hidden reasoning while keeping final output clear.
 
 Codex notes:
 - Plugin bundle gives `$laconic`.
-- `laconic-commit` and `laconic-review` are not in Codex plugin bundle; use `SKILL.md` files directly.
+- Auxiliary skills such as `laconic-commit`, `laconic-review`, `laconic-help`, and `laconic-think` are not in Codex plugin bundle; use `SKILL.md` files directly.
 - For repo memory, `AGENTS.md` is usually higher-value than `CODEX.md`.
+- `laconic-think` is best for short debugging/triage/refactor tasks, not high-stakes or exploratory design work.
+- Current runtime support tracks `think` on/off only; it does not persist `terse|balanced|draft` submodes or guarantee a hidden-thought channel.
 
 ## Distribution
 

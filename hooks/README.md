@@ -16,7 +16,7 @@ If you installed Laconic standalone, run `bash hooks/install.sh` or `powershell 
 ### `laconic-mode-tracker.js`
 
 - Fires on every user prompt
-- Tracks `/laconic`, `/laconic balanced`, `/laconic-commit`, `/laconic-review`, `/laconic-compress`
+- Tracks `/laconic`, `/laconic balanced`, `/laconic-commit`, `/laconic-review`, `/laconic-think`, `/laconic-compress`
 - Removes the flag on `stop laconic`, `plain english`, or `normal mode`
 
 ### `laconic-statusline.sh` / `laconic-statusline.ps1`
@@ -32,6 +32,7 @@ Examples:
 - `/laconic` -> `[LACONIC]`
 - `/laconic balanced` -> `[LACONIC:BALANCED]`
 - `/laconic-commit` -> `[LACONIC:COMMIT]`
+- `/laconic-think` -> `[LACONIC:THINK]`
 
 Plugin installs nudge setup only when no custom `statusLine` exists. Standalone installs wire the badge automatically when possible and leave existing custom statuslines alone.
 

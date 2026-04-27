@@ -174,6 +174,41 @@ class HookScriptTests(unittest.TestCase):
             )
             self.assertEqual((claude_dir / ".laconic-active").read_text(), "balanced")
 
+    def test_mode_tracker_records_think_mode(self):
+        with tempfile.TemporaryDirectory(prefix="laconic-hooks-think-") as tmp:
+            home = Path(tmp)
+            claude_dir = home / ".claude"
+            claude_dir.mkdir(parents=True)
+
+            subprocess.run(
+                ["node", "hooks/laconic-mode-tracker.js"],
+                cwd=REPO_ROOT,
+                env={**os.environ, "HOME": str(home), "USERPROFILE": str(home)},
+                text=True,
+                input='{"prompt":"/laconic-think balanced"}',
+                capture_output=True,
+                check=True,
+            )
+            self.assertEqual((claude_dir / ".laconic-active").read_text(), "think")
+
+    def test_mode_tracker_normal_thinking_clears_think_mode(self):
+        with tempfile.TemporaryDirectory(prefix="laconic-hooks-normal-thinking-") as tmp:
+            home = Path(tmp)
+            claude_dir = home / ".claude"
+            claude_dir.mkdir(parents=True)
+            (claude_dir / ".laconic-active").write_text("think")
+
+            subprocess.run(
+                ["node", "hooks/laconic-mode-tracker.js"],
+                cwd=REPO_ROOT,
+                env={**os.environ, "HOME": str(home), "USERPROFILE": str(home)},
+                text=True,
+                input='{"prompt":"normal thinking"}',
+                capture_output=True,
+                check=True,
+            )
+            self.assertFalse((claude_dir / ".laconic-active").exists())
+
 
 if __name__ == "__main__":
     unittest.main()
