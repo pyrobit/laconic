@@ -23,6 +23,18 @@ const COMMAND_MODE_ALIASES = {
   balanced: 'balanced',
 };
 
+const COMPRESSION_RATIOS = {
+  terse: 0.65,
+  balanced: 0.45,
+};
+
+// Output token price per 1M tokens (USD). Matched by model name prefix.
+const MODEL_PRICING = {
+  'claude-opus-4': 15.0,
+  'claude-sonnet-4': 3.0,
+  'claude-haiku-4': 0.25,
+};
+
 function normalizeMode(mode, fallback = null) {
   if (typeof mode !== 'string') return fallback;
   const raw = mode.trim().toLowerCase();
@@ -242,9 +254,11 @@ function readFlag(flagPath) {
 
 module.exports = {
   CANONICAL_PROSE_MODES,
+  COMPRESSION_RATIOS,
   DEFAULT_MODE,
   FLAG_FILE_NAME,
   INDEPENDENT_MODES,
+  MODEL_PRICING,
   VALID_MODES,
   findSkillPath,
   getCanonicalModeLabel,

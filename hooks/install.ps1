@@ -24,7 +24,7 @@ $HooksDir = Join-Path $ClaudeDir "hooks"
 $Settings = Join-Path $ClaudeDir "settings.json"
 $RepoUrl = "https://raw.githubusercontent.com/pyrobit/laconic/main/hooks"
 
-$HookFiles = @("package.json", "laconic-config.js", "laconic-activate.js", "laconic-mode-tracker.js", "laconic-statusline.sh", "laconic-statusline.ps1")
+$HookFiles = @("package.json", "laconic-config.js", "laconic-activate.js", "laconic-mode-tracker.js", "laconic-stats.js", "laconic-statusline.sh", "laconic-statusline.ps1")
 
 # Resolve source — works from repo clone or remote
 $ScriptDir = if ($PSScriptRoot) { $PSScriptRoot } else { $null }
@@ -187,3 +187,33 @@ Write-Host "  - SessionStart hook: auto-loads laconic rules every session"
 Write-Host "  - Mode tracker hook: updates statusline badge when you switch modes"
 Write-Host "    (/laconic, /laconic balanced, /laconic-commit, etc.)"
 Write-Host "  - Statusline badge: shows [LACONIC] or [LACONIC:BALANCED] etc."
+
+# OpenClaw — optional, silent-skip if workspace not found
+$OpenClawWorkspace = Join-Path $env:USERPROFILE ".openclaw\workspace"
+if (Test-Path $OpenClawWorkspace) {
+  Write-Host ""
+  Write-Host "OpenClaw workspace detected — installing Laconic..."
+  $OpenClawSkillsDir = Join-Path $OpenClawWorkspace "skills\laconic"
+  if (-not (Test-Path $OpenClawSkillsDir)) { New-Item -ItemType Directory -Path $OpenClawSkillsDir -Force | Out-Null }
+
+  $SkillSrc = Join-Path $ScriptDir "..\skills\laconic\SKILL.md"
+  if (Test-Path $SkillSrc) {
+    Copy-Item $SkillSrc (Join-Path $OpenClawSkillsDir "SKILL.md") -Force
+    Write-Host "  Skill file installed: $OpenClawSkillsDir\SKILL.md"
+  }
+
+  $SoulFile = Join-Path $OpenClawWorkspace "SOUL.md"
+  $BootstrapSrc = Join-Path $ScriptDir "..\rules\laconic-openclaw-bootstrap.md"
+  if (Test-Path $BootstrapSrc) {
+    $block = Get-Content $BootstrapSrc -Raw
+    if ((Test-Path $SoulFile) -and ((Get-Content $SoulFile -Raw) -match "laconic-begin")) {
+      $soul = Get-Content $SoulFile -Raw
+      $updated = $soul -replace "(?s)<!-- laconic-begin -->.*?<!-- laconic-end -->", $block.Trim()
+      Set-Content $SoulFile $updated -NoNewline
+      Write-Host "  SOUL.md block updated."
+    } else {
+      Add-Content $SoulFile "`n$($block.Trim())"
+      Write-Host "  SOUL.md block added."
+    }
+  }
+}

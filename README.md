@@ -126,6 +126,7 @@ Pick your agent. One command.
 | **Windsurf** | `npx skills add pyrobit/laconic -a windsurf` |
 | **Copilot** | `npx skills add pyrobit/laconic -a github-copilot` |
 | **Cline** | `npx skills add pyrobit/laconic -a cline` |
+| **OpenClaw** | Run `install.sh` — auto-detected if `~/.openclaw/workspace` exists |
 | **Any other** | `npx skills add pyrobit/laconic` |
 
 Install once. Use it every session for that target after that. One rock. That's it.
@@ -134,18 +135,19 @@ Install once. Use it every session for that target after that. One rock. That's 
 
 Auto-activation is built in for Claude Code, Gemini CLI, and the repo-local Codex setup below. `npx skills add` installs the skill for other agents, but does **not** install repo rule files or instructions, so Laconic does not auto-start there unless you add the always-on snippet below.
 
-| Feature | Claude Code | Codex | Gemini CLI | Cursor | Windsurf | Cline | Copilot |
-|---------|:-----------:|:-----:|:----------:|:------:|:--------:|:-----:|:-------:|
-| Laconic mode | Y | Y | Y | Y | Y | Y | Y |
-| Auto-activate every session | Y | Y¹ | Y | —² | —² | —² | —² |
-| `/laconic` command | Y | Y¹ | Y | — | — | — | — |
-| Mode switching (terse/balanced) | Y | Y¹ | Y | Y³ | Y³ | — | — |
-| Statusline badge | Y⁴ | — | — | — | — | — | — |
-| laconic-commit | Y | — | Y | Y | Y | Y | Y |
-| laconic-review | Y | — | Y | Y | Y | Y | Y |
-| laconic-think | Y | — | Y | Y | Y | Y | Y |
-| laconic-compress | Y | Y | Y | Y | Y | Y | Y |
-| laconic-help | Y | — | Y | Y | Y | Y | Y |
+| Feature | Claude Code | Codex | Gemini CLI | Cursor | Windsurf | Cline | Copilot | OpenClaw |
+|---------|:-----------:|:-----:|:----------:|:------:|:--------:|:-----:|:-------:|:--------:|
+| Laconic mode | Y | Y | Y | Y | Y | Y | Y | Y |
+| Auto-activate every session | Y | Y¹ | Y | —² | —² | —² | —² | Y⁵ |
+| `/laconic` command | Y | Y¹ | Y | — | — | — | — | — |
+| Mode switching (terse/balanced) | Y | Y¹ | Y | Y³ | Y³ | — | — | — |
+| Statusline badge | Y⁴ | — | — | — | — | — | — | — |
+| laconic-commit | Y | — | Y | Y | Y | Y | Y | Y |
+| laconic-review | Y | — | Y | Y | Y | Y | Y | Y |
+| laconic-think | Y | — | Y | Y | Y | Y | Y | Y |
+| laconic-compress | Y | Y | Y | Y | Y | Y | Y | Y |
+| laconic-help | Y | — | Y | Y | Y | Y | Y | Y |
+| laconic-stats | Y | — | — | — | — | — | — | — |
 
 > [!NOTE]
 > Auto-activation works differently per agent: Claude Code uses SessionStart hooks, this repo's Codex dogfood setup uses `.codex/hooks.json`, Gemini uses context files. Cursor/Windsurf/Cline/Copilot can be made always-on, but `npx skills add` installs only the skill, not the repo rule/instruction files.
@@ -154,6 +156,7 @@ Auto-activation is built in for Claude Code, Gemini CLI, and the repo-local Code
 > ² Add the "Want it always on?" snippet below to those agents' system prompt or rule file if you want session-start activation.
 > ³ Cursor and Windsurf receive the full SKILL.md with Laconic modes. Mode switching works on-demand via the skill; no slash command.
 > ⁴ Available in Claude Code, but plugin install only nudges setup. Standalone `install.sh` / `install.ps1` configures it automatically when no custom `statusLine` exists.
+> ⁵ OpenClaw auto-activates via SOUL.md block injection, installed automatically by `install.sh` when `~/.openclaw/workspace` is detected.
 
 <details>
 <summary><strong>Claude Code — full details</strong></summary>
@@ -222,6 +225,7 @@ Auto-activates via the `GEMINI.md` context file. Also ships custom Gemini comman
 - `/laconic-commit` — generate terse commit message
 - `/laconic-review` — one-line code review
 - `/laconic-think` — compress hidden reasoning
+- `/laconic-stats` — show session token savings (Claude Code only; hook-driven)
 
 </details>
 

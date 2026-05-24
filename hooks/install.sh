@@ -37,7 +37,7 @@ HOOKS_DIR="$CLAUDE_DIR/hooks"
 SETTINGS="$CLAUDE_DIR/settings.json"
 REPO_URL="https://raw.githubusercontent.com/pyrobit/laconic/main/hooks"
 
-HOOK_FILES=("package.json" "laconic-config.js" "laconic-activate.js" "laconic-mode-tracker.js" "laconic-statusline.sh")
+HOOK_FILES=("package.json" "laconic-config.js" "laconic-activate.js" "laconic-mode-tracker.js" "laconic-stats.js" "laconic-statusline.sh")
 
 # Resolve source — works from repo clone or curl pipe
 SCRIPT_DIR=""
@@ -201,3 +201,47 @@ echo "  - SessionStart hook: auto-loads laconic rules every session"
 echo "  - Mode tracker hook: updates statusline badge when you switch modes"
 echo "    (/laconic, /laconic balanced, /laconic-commit, etc.)"
 echo "  - Statusline badge: shows [LACONIC] or [LACONIC:BALANCED] etc."
+
+# OpenClaw — optional, silent-skip if workspace not found
+OPENCLAW_WORKSPACE="$HOME/.openclaw/workspace"
+if [ -d "$OPENCLAW_WORKSPACE" ]; then
+  echo ""
+  echo "OpenClaw workspace detected — installing Laconic..."
+  OPENCLAW_SKILLS_DIR="$OPENCLAW_WORKSPACE/skills/laconic"
+  mkdir -p "$OPENCLAW_SKILLS_DIR"
+
+  # Copy skill file
+  SKILL_SRC=""
+  if [ -n "$SCRIPT_DIR" ] && [ -f "$SCRIPT_DIR/../skills/laconic/SKILL.md" ]; then
+    SKILL_SRC="$SCRIPT_DIR/../skills/laconic/SKILL.md"
+  fi
+  if [ -n "$SKILL_SRC" ]; then
+    cp "$SKILL_SRC" "$OPENCLAW_SKILLS_DIR/SKILL.md"
+    echo "  Skill file installed: $OPENCLAW_SKILLS_DIR/SKILL.md"
+  fi
+
+  # Inject/update marker block in SOUL.md
+  SOUL_FILE="$OPENCLAW_WORKSPACE/SOUL.md"
+  BOOTSTRAP_SRC=""
+  if [ -n "$SCRIPT_DIR" ] && [ -f "$SCRIPT_DIR/../rules/laconic-openclaw-bootstrap.md" ]; then
+    BOOTSTRAP_SRC="$SCRIPT_DIR/../rules/laconic-openclaw-bootstrap.md"
+  fi
+  if [ -n "$BOOTSTRAP_SRC" ]; then
+    BLOCK=$(cat "$BOOTSTRAP_SRC")
+    if [ -f "$SOUL_FILE" ] && grep -q "laconic-begin" "$SOUL_FILE" 2>/dev/null; then
+      # Replace existing block using node (avoids sed portability issues)
+      node -e "
+        const fs = require('fs');
+        const soul = fs.readFileSync('$SOUL_FILE', 'utf8');
+        const block = fs.readFileSync('$BOOTSTRAP_SRC', 'utf8');
+        const updated = soul.replace(/<!-- laconic-begin -->[\s\S]*?<!-- laconic-end -->/m, block.trim());
+        fs.writeFileSync('$SOUL_FILE', updated);
+      " && echo "  SOUL.md block updated." || echo "  WARNING: could not update SOUL.md block."
+    else
+      # Append block
+      echo "" >> "$SOUL_FILE"
+      cat "$BOOTSTRAP_SRC" >> "$SOUL_FILE"
+      echo "  SOUL.md block added."
+    fi
+  fi
+fi

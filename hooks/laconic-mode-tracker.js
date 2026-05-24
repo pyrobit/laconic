@@ -26,6 +26,22 @@ process.stdin.on('end', () => {
     const prompt = (data.prompt || '').trim();
     const lowered = prompt.toLowerCase();
 
+    if (/^\/laconic-stats(\s|$)/.test(lowered)) {
+      const statsScript = path.join(__dirname, 'laconic-stats.js');
+      const { execFileSync } = require('child_process');
+      try {
+        const result = execFileSync(process.execPath, [statsScript], {
+          input: JSON.stringify(data),
+          encoding: 'utf8',
+          timeout: 5000,
+        });
+        process.stdout.write(result);
+      } catch (e) {
+        process.stdout.write(JSON.stringify({ decision: 'block', reason: 'laconic-stats: error reading session data.' }));
+      }
+      return;
+    }
+
     if (isActivationPrompt(lowered) && !isDeactivationPrompt(lowered)) {
       const mode = getDefaultMode();
       if (mode !== 'off') {
